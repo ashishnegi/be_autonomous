@@ -155,15 +155,33 @@ totalTime activities =
         |> List.sum
 
 
+getQuadrantViewData : ViewData -> QuadrantType -> QuadrantView
+getQuadrantViewData viewData quadrantType =
+    case quadrantType of
+        UrgentAndImportant ->
+            viewData.q1Quadrant
+
+        ImportantNotUrgent ->
+            viewData.q2Quadrant
+
+        UrgentNotImportant ->
+            viewData.q3Quadrant
+
+        NotUrgentNotImportant ->
+            viewData.q4Quadrant
+
+
 
 {-
    User model :
     * list of activities
 -}
 
+
 type alias QuadrantView =
     { expanded : Bool
     }
+
 
 type alias ViewData =
     { newActivityName : Name

@@ -32,12 +32,24 @@ renderQuadrants model =
             List.filter QM.isQ4 model.activities
     in
         div []
-            [ renderQuadrantCollapse QM.UrgentAndImportant q1Activities
-            , renderQuadrantCollapse QM.ImportantNotUrgent q2Activities
-            , renderQuadrantCollapse QM.UrgentNotImportant q3Activities
-            , renderQuadrantCollapse QM.NotUrgentNotImportant q4Activities
+            [ renderQuadrant QM.UrgentAndImportant model q1Activities
+            , renderQuadrant QM.ImportantNotUrgent model q2Activities
+            , renderQuadrant QM.UrgentNotImportant model q3Activities
+            , renderQuadrant QM.NotUrgentNotImportant model q4Activities
             , rawView model
             ]
+
+
+renderQuadrant : QM.QuadrantType -> QuadrantModel -> List Activity -> Html Msg
+renderQuadrant quadrantType model activities =
+    let
+        quadrantViewData =
+            QM.getQuadrantViewData model.viewData quadrantType
+    in
+        if quadrantViewData.expanded then
+            renderQuadrantExpanded quadrantType activities
+        else
+            renderQuadrantCollapse quadrantType activities
 
 
 renderQuadrantCollapse : QM.QuadrantType -> List Activity -> Html Msg
@@ -67,21 +79,23 @@ renderActivityInput =
             []
         , fieldset []
             [ radio "Urgent and Important" (QMsg.NewActivityQuadrant QM.UrgentAndImportant)
-            , radio "Important and not Important" (QMsg.NewActivityQuadrant QM.ImportantNotUrgent)
-            , radio "Urgent and not Important" (QMsg.NewActivityQuadrant QM.UrgentNotImportant)
+            , radio "Not Urgent but Important" (QMsg.NewActivityQuadrant QM.ImportantNotUrgent)
+            , radio "Urgent but not Important" (QMsg.NewActivityQuadrant QM.UrgentNotImportant)
             , radio "Not Urgent and not Important" (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant)
             ]
         , button [ onClick QMsg.NewActivity ] [ text "Create Activity" ]
         ]
 
 
-renderQuadrant : List Activity -> Html Msg
-renderQuadrant activities =
+renderQuadrantExpanded : QM.QuadrantType -> List Activity -> Html Msg
+renderQuadrantExpanded quadrantType activities =
     div []
-        [ text "<<<<<<<"
+        [ String.concat [ "<<<<<<<", (toString quadrantType), "<<<<<<<<" ]
+            |> text
         , div []
             (List.map renderActivity activities)
-        , text ">>>>>>>"
+        , text ">>>>>>>>>>>>>>>>>"
+        , button [ onClick (QMsg.ExpandQuadrant quadrantType) ] [ text "Collapse" ]
         ]
 
 
@@ -102,6 +116,8 @@ radio value msg =
         , text value
         ]
 
+
 rawView : QuadrantModel -> Html Msg
-rawView model = toString model
-                |> text
+rawView model =
+    toString model
+        |> text

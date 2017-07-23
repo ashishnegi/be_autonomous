@@ -34,20 +34,25 @@ update msg model =
 
             ExpandQuadrant quadrantType ->
                 ( { model | viewData = toggleExpand quadrantType viewData }, Cmd.none )
+
             GenerateReport ->
                 -- move to new view by sending back the command .. ?
                 ( model, Cmd.none )
 
+
 toggleExpand : QuadrantType -> ViewData -> ViewData
 toggleExpand quadrantType viewData =
-    let quadrantViewData =
-            case quadrantType of
-               UrgentAndImportant -> viewData.q1Quadrant
-               ImportantNotUrgent -> viewData.q2Quadrant
-               UrgentNotImportant -> viewData.q3Quadrant
-               NotUrgentNotImportant -> viewData.q4Quadrant
-    in case quadrantType of
-           UrgentAndImportant -> { viewData | q1Quadrant = { quadrantViewData | expanded = not quadrantViewData.expanded } }
-           ImportantNotUrgent -> { viewData | q2Quadrant = quadrantViewData }
-           UrgentNotImportant -> { viewData | q3Quadrant = quadrantViewData }
-           NotUrgentNotImportant -> { viewData | q4Quadrant = quadrantViewData }
+    let
+        quadrantViewData = getQuadrantViewData viewData quadrantType
+        newQuadrantViewData =
+                { quadrantViewData | expanded = not quadrantViewData.expanded }
+    in
+        case quadrantType of
+            UrgentAndImportant ->
+                { viewData | q1Quadrant = newQuadrantViewData }
+            ImportantNotUrgent ->
+                { viewData | q2Quadrant = newQuadrantViewData }
+            UrgentNotImportant ->
+                { viewData | q3Quadrant = newQuadrantViewData }
+            NotUrgentNotImportant ->
+                { viewData | q4Quadrant = newQuadrantViewData }
