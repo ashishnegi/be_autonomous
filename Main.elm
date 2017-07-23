@@ -6,6 +6,7 @@ import Quadrant.Message as QMsg
 import Quadrant.Update as QUpd
 import Quadrant.View as QV
 
+
 main =
     program
         { init = init
@@ -23,13 +24,23 @@ view model =
         ]
 
 
-init : (QM.QuadrantModel, Cmd QMsg.Msg)
+init : ( QM.QuadrantModel, Cmd QMsg.Msg )
 init =
-    (QM.QuadrantModel [] (QM.ViewData "" QM.UrgentAndImportant 200), Cmd.none)
+    let
+        collapseView =
+            QM.QuadrantView False
+    in
+        ( QM.QuadrantModel
+            []
+            (QM.ViewData "" QM.UrgentAndImportant 200 collapseView collapseView collapseView collapseView)
+        , Cmd.none
+        )
 
 
 update : QMsg.Msg -> QM.QuadrantModel -> ( QM.QuadrantModel, Cmd QMsg.Msg )
 update =
     QUpd.update
 
-subscriptions x = Sub.none
+
+subscriptions x =
+    Sub.none

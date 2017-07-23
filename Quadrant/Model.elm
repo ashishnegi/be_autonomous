@@ -161,11 +161,18 @@ totalTime activities =
     * list of activities
 -}
 
+type alias QuadrantView =
+    { expanded : Bool
+    }
 
 type alias ViewData =
     { newActivityName : Name
     , newActivityQuadrant : QuadrantType
     , newActivityTimeSpan : TimeSpan
+    , q1Quadrant : QuadrantView
+    , q2Quadrant : QuadrantView
+    , q3Quadrant : QuadrantView
+    , q4Quadrant : QuadrantView
     }
 
 

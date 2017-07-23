@@ -7,6 +7,7 @@ import Html.Events exposing (onClick, onInput)
 import Html.Attributes exposing (placeholder, name, style, type_)
 import String
 
+
 view : QuadrantModel -> Html Msg
 view model =
     div []
@@ -31,26 +32,29 @@ renderQuadrants model =
             List.filter QM.isQ4 model.activities
     in
         div []
-            [ renderQuadrantCollapse q1Activities
-            , renderQuadrantCollapse q2Activities
-            , renderQuadrantCollapse q3Activities
-            , renderQuadrantCollapse q4Activities
+            [ renderQuadrantCollapse QM.UrgentAndImportant q1Activities
+            , renderQuadrantCollapse QM.ImportantNotUrgent q2Activities
+            , renderQuadrantCollapse QM.UrgentNotImportant q3Activities
+            , renderQuadrantCollapse QM.NotUrgentNotImportant q4Activities
+            , rawView model
             ]
 
-renderQuadrantCollapse : List Activity -> Html Msg
-renderQuadrantCollapse activities =
+
+renderQuadrantCollapse : QM.QuadrantType -> List Activity -> Html Msg
+renderQuadrantCollapse quadrantType activities =
     div []
-        [
-         (List.length activities
-         |> toString
-         |> String.append "Total : "
-         |> text
-         )
+        [ (List.length activities
+            |> toString
+            |> String.append "Total : "
+            |> text
+          )
         , QM.totalTime activities
-        |> toString
-        |> String.append "\nTime : "
-        |> text
+            |> toString
+            |> String.append "\nTime : "
+            |> text
+        , button [ onClick (QMsg.ExpandQuadrant quadrantType) ] [ text "Expand" ]
         ]
+
 
 renderActivityInput : Html Msg
 renderActivityInput =
@@ -76,8 +80,9 @@ renderQuadrant activities =
     div []
         [ text "<<<<<<<"
         , div []
-              (List.map renderActivity activities)
-        , text ">>>>>>>"]
+            (List.map renderActivity activities)
+        , text ">>>>>>>"
+        ]
 
 
 renderActivity : Activity -> Html Msg
@@ -87,6 +92,7 @@ renderActivity activity =
         , toString activity.timeSpent |> text
         ]
 
+
 radio : String -> msg -> Html msg
 radio value msg =
     label
@@ -95,3 +101,7 @@ radio value msg =
         [ input [ type_ "radio", name "font-size", onClick msg ] []
         , text value
         ]
+
+rawView : QuadrantModel -> Html Msg
+rawView model = toString model
+                |> text

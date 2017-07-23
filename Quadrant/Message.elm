@@ -8,4 +8,5 @@ type Msg
     | NewActivityQuadrant QuadrantType
     | NewActivityTimeSpan TimeSpan
     | NewActivity
+    | ExpandQuadrant QuadrantType
     | GenerateReport
