@@ -15,7 +15,7 @@ module Quadrant.Model exposing (..)
 -}
 
 
-type Quadrant
+type QuadrantType
     = UrgentAndImportant -- Q1
     | ImportantNotUrgent -- Q2
     | UrgentNotImportant -- Q3
@@ -32,8 +32,8 @@ type Importance
     | NotImportant
 
 
-getQuadrant : Urgency -> Importance -> Quadrant
-getQuadrant urgency importance =
+getQuadrantType : Urgency -> Importance -> QuadrantType
+getQuadrantType urgency importance =
     case ( urgency, importance ) of
         ( Urgent, Important ) ->
             UrgentAndImportant
@@ -65,13 +65,13 @@ type alias Name =
 type alias Activity =
     { id : Id
     , name : Name
-    , quadrant : Quadrant
+    , quadrant : QuadrantType
     , timeSpent : TimeSpan
     }
 
 
 type alias Result =
-    { quadrant : Quadrant
+    { quadrant : QuadrantType
     , ratio : Float
     }
 
@@ -149,6 +149,12 @@ quadrantRatioTimes activities =
     Basics.toFloat a / Basics.toFloat b
 
 
+totalTime : List Activity -> TimeSpan
+totalTime activities =
+    List.map .timeSpent activities
+        |> List.sum
+
+
 
 {-
    User model :
@@ -158,7 +164,7 @@ quadrantRatioTimes activities =
 
 type alias ViewData =
     { newActivityName : Name
-    , newActivityQuadrant : Quadrant
+    , newActivityQuadrant : QuadrantType
     , newActivityTimeSpan : TimeSpan
     }
 

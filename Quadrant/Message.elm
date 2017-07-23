@@ -5,7 +5,7 @@ import Quadrant.Model exposing (..)
 
 type Msg
     = NewActivityText Name
-    | NewActivityQuadrant Quadrant
+    | NewActivityQuadrant QuadrantType
     | NewActivityTimeSpan TimeSpan
     | NewActivity
     | GenerateReport
