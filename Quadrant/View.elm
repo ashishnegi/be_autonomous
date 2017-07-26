@@ -4,7 +4,7 @@ import Quadrant.Model as QM exposing (QuadrantModel, Activity)
 import Quadrant.Message as QMsg exposing (Msg)
 import Html exposing (Html, div, text, button, input, fieldset, label)
 import Html.Events exposing (onClick, onInput)
-import Html.Attributes exposing (placeholder, name, style, type_, disabled)
+import Html.Attributes exposing (placeholder, name, style, type_, disabled, checked)
 import String
 
 
@@ -12,7 +12,7 @@ view : QuadrantModel -> Html Msg
 view model =
     div []
         [ renderQuadrants model
-        , renderActivityInput
+        , renderNewActivityInput model
         , renderReportGeneration model
         ]
 
@@ -69,8 +69,8 @@ renderQuadrantCollapse quadrantType activities =
         ]
 
 
-renderActivityInput : Html Msg
-renderActivityInput =
+renderNewActivityInput : QuadrantModel -> Html Msg
+renderNewActivityInput model =
     div []
         [ text "Create new Activity:"
         , input
@@ -79,10 +79,10 @@ renderActivityInput =
             ]
             []
         , fieldset []
-            [ radio "Urgent and Important" (QMsg.NewActivityQuadrant QM.UrgentAndImportant)
-            , radio "Not Urgent but Important" (QMsg.NewActivityQuadrant QM.ImportantNotUrgent)
-            , radio "Urgent but not Important" (QMsg.NewActivityQuadrant QM.UrgentNotImportant)
-            , radio "Not Urgent and not Important" (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant)
+            [ radio "Urgent and Important" (QMsg.NewActivityQuadrant QM.UrgentAndImportant) (model.viewData.newActivityQuadrant == QM.UrgentAndImportant)
+            , radio "Not Urgent but Important" (QMsg.NewActivityQuadrant QM.ImportantNotUrgent) (model.viewData.newActivityQuadrant == QM.ImportantNotUrgent)
+            , radio "Urgent but not Important" (QMsg.NewActivityQuadrant QM.UrgentNotImportant) (model.viewData.newActivityQuadrant == QM.UrgentNotImportant)
+            , radio "Not Urgent and not Important" (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant) (model.viewData.newActivityQuadrant == QM.NotUrgentNotImportant)
             ]
         , button [ onClick QMsg.NewActivity ] [ text "Create Activity" ]
         ]
@@ -108,12 +108,12 @@ renderActivity activity =
         ]
 
 
-radio : String -> msg -> Html msg
-radio value msg =
+radio : String -> msg -> Bool -> Html msg
+radio value msg isChecked =
     label
         [ style [ ( "padding", "20px" ) ]
         ]
-        [ input [ type_ "radio", name "font-size", onClick msg ] []
+        [ input [ type_ "radio", name "font-size", onClick msg, checked isChecked ] []
         , text value
         ]
 
@@ -138,10 +138,12 @@ renderReportGeneration model =
                 )
     else
         div []
-            [ button [ onClick QMsg.GenerateReport
-                     , disabled <| not <| QM.canGenerateReport model
-                     ]
-                  [ text "GenerateReport" ] ]
+            [ button
+                [ onClick QMsg.GenerateReport
+                , disabled <| not <| QM.canGenerateReport model
+                ]
+                [ text "GenerateReport" ]
+            ]
 
 
 renderReportResult : QM.Result -> Html Msg
