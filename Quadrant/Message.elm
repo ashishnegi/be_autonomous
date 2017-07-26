@@ -10,3 +10,4 @@ type Msg
     | NewActivity
     | ExpandQuadrant QuadrantType
     | GenerateReport
+    | ToCreateActivityMode

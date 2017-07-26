@@ -32,7 +32,7 @@ init =
     in
         ( QM.QuadrantModel
             []
-            (QM.ViewData "" QM.UrgentAndImportant 200 collapseView collapseView collapseView collapseView)
+            (QM.ViewData "" QM.UrgentAndImportant 200 collapseView collapseView collapseView collapseView QM.CreateActivityMode)
         , Cmd.none
         )
 

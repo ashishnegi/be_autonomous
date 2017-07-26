@@ -170,9 +170,17 @@ getQuadrantViewData viewData quadrantType =
         NotUrgentNotImportant ->
             viewData.q4Quadrant
 
+
 canGenerateReport : QuadrantModel -> Bool
 canGenerateReport model =
-    not <| List.isEmpty model.activities
+    case model.viewData.viewMode of
+        ViewReportMode ->
+            not <| List.isEmpty model.activities
+
+        _ ->
+            False
+
+
 
 {-
    User model :
@@ -185,6 +193,11 @@ type alias QuadrantView =
     }
 
 
+type ViewMode
+    = CreateActivityMode
+    | ViewReportMode
+
+
 type alias ViewData =
     { newActivityName : Name
     , newActivityQuadrant : QuadrantType
@@ -193,6 +206,7 @@ type alias ViewData =
     , q2Quadrant : QuadrantView
     , q3Quadrant : QuadrantView
     , q4Quadrant : QuadrantView
+    , viewMode : ViewMode
     }
 
 

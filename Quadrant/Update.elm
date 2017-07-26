@@ -36,23 +36,30 @@ update msg model =
                 ( { model | viewData = toggleExpand quadrantType viewData }, Cmd.none )
 
             GenerateReport ->
-                -- move to new view by sending back the command .. ?
-                ( model, Cmd.none )
+                ( { model | viewData = { viewData | viewMode = ViewReportMode } }, Cmd.none )
+
+            ToCreateActivityMode ->
+                ( { model | viewData = { viewData | viewMode = CreateActivityMode } }, Cmd.none )
 
 
 toggleExpand : QuadrantType -> ViewData -> ViewData
 toggleExpand quadrantType viewData =
     let
-        quadrantViewData = getQuadrantViewData viewData quadrantType
+        quadrantViewData =
+            getQuadrantViewData viewData quadrantType
+
         newQuadrantViewData =
-                { quadrantViewData | expanded = not quadrantViewData.expanded }
+            { quadrantViewData | expanded = not quadrantViewData.expanded }
     in
         case quadrantType of
             UrgentAndImportant ->
                 { viewData | q1Quadrant = newQuadrantViewData }
+
             ImportantNotUrgent ->
                 { viewData | q2Quadrant = newQuadrantViewData }
+
             UrgentNotImportant ->
                 { viewData | q3Quadrant = newQuadrantViewData }
+
             NotUrgentNotImportant ->
                 { viewData | q4Quadrant = newQuadrantViewData }

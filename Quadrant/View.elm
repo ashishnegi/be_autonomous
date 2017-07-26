@@ -127,7 +127,22 @@ rawView model =
 renderReportGeneration : QuadrantModel -> Html Msg
 renderReportGeneration model =
     if QM.canGenerateReport model then
+        let
+            report =
+                QM.quadrantRatioTimes model.activities
+        in
+            div []
+                (List.append
+                    (List.map renderReportResult report)
+                    [ button [ onClick QMsg.ToCreateActivityMode ] [ text "Collapse"]])
+    else
         div []
             [ button [ onClick QMsg.GenerateReport ] [ text "GenerateReport" ] ]
-    else
-        div [] []
+
+
+renderReportResult : QM.Result -> Html Msg
+renderReportResult result =
+    div []
+        [ text (toString result.quadrant)
+        , text (toString result.ratio)
+        ]
