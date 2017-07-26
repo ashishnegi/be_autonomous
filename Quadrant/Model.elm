@@ -170,7 +170,9 @@ getQuadrantViewData viewData quadrantType =
         NotUrgentNotImportant ->
             viewData.q4Quadrant
 
-
+canGenerateReport : QuadrantModel -> Bool
+canGenerateReport model =
+    not <| List.isEmpty model.activities
 
 {-
    User model :

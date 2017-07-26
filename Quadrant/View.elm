@@ -13,6 +13,7 @@ view model =
     div []
         [ renderQuadrants model
         , renderActivityInput
+        , renderReportGeneration model
         ]
 
 
@@ -121,3 +122,12 @@ rawView : QuadrantModel -> Html Msg
 rawView model =
     toString model
         |> text
+
+
+renderReportGeneration : QuadrantModel -> Html Msg
+renderReportGeneration model =
+    if QM.canGenerateReport model then
+        div []
+            [ button [ onClick QMsg.GenerateReport ] [ text "GenerateReport" ] ]
+    else
+        div [] []
