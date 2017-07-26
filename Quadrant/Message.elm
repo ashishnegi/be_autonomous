@@ -11,3 +11,4 @@ type Msg
     | ExpandQuadrant QuadrantType
     | GenerateReport
     | ToCreateActivityMode
+    | DeleteActivity Id

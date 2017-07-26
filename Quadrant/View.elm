@@ -105,6 +105,7 @@ renderActivity activity =
     div []
         [ text activity.name
         , toString activity.timeSpent |> text
+        , button [ onClick (QMsg.DeleteActivity activity.id) ] [ text "Delete" ]
         ]
 
 

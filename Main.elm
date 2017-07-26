@@ -5,6 +5,7 @@ import Quadrant.Model as QM
 import Quadrant.Message as QMsg
 import Quadrant.Update as QUpd
 import Quadrant.View as QV
+import Random.Pcg exposing (initialSeed)
 
 
 main =
@@ -33,6 +34,7 @@ init =
         ( QM.QuadrantModel
             []
             (QM.ViewData "" QM.UrgentAndImportant 200 collapseView collapseView collapseView collapseView QM.CreateActivityMode)
+            (initialSeed 0)
         , Cmd.none
         )
 

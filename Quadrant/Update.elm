@@ -4,15 +4,6 @@ import Quadrant.Message exposing (..)
 import Quadrant.Model exposing (..)
 
 
-newActivity : ViewData -> Activity
-newActivity viewData =
-    let
-        { newActivityName, newActivityQuadrant, newActivityTimeSpan } =
-            viewData
-    in
-        Activity "id1" newActivityName newActivityQuadrant newActivityTimeSpan
-
-
 update : Msg -> QuadrantModel -> ( QuadrantModel, Cmd Msg )
 update msg model =
     let
@@ -30,7 +21,7 @@ update msg model =
                 ( { model | viewData = { viewData | newActivityTimeSpan = timeSpan } }, Cmd.none )
 
             NewActivity ->
-                ( { model | activities = newActivity viewData :: activities }, Cmd.none )
+                ( commitNewActivity model, Cmd.none )
 
             ExpandQuadrant quadrantType ->
                 ( { model | viewData = toggleExpand quadrantType viewData }, Cmd.none )
@@ -40,6 +31,9 @@ update msg model =
 
             ToCreateActivityMode ->
                 ( { model | viewData = { viewData | viewMode = CreateActivityMode } }, Cmd.none )
+
+            DeleteActivity activityId ->
+                ( { model | activities = List.filter (\x -> x.id /= activityId) model.activities }, Cmd.none )
 
 
 toggleExpand : QuadrantType -> ViewData -> ViewData

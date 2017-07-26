@@ -1,5 +1,9 @@
 module Quadrant.Model exposing (..)
 
+import Uuid
+import Random.Pcg exposing (Seed, step)
+
+
 {-
                     Urgent  NotUrgent
                   --------------------
@@ -55,7 +59,7 @@ type alias TimeSpan =
 
 
 type alias Id =
-    String
+    Uuid.Uuid
 
 
 type alias Name =
@@ -181,7 +185,6 @@ shouldGenerateReport model =
             False
 
 
-
 canGenerateReport : QuadrantModel -> Bool
 canGenerateReport model =
     case model.viewData.viewMode of
@@ -190,6 +193,24 @@ canGenerateReport model =
 
         _ ->
             not <| List.isEmpty model.activities
+
+
+commitNewActivity : QuadrantModel -> QuadrantModel
+commitNewActivity model =
+    let
+        { activities, viewData, currentSeed } =
+            model
+
+        { newActivityName, newActivityQuadrant, newActivityTimeSpan } =
+            viewData
+
+        ( newUuid, newSeed ) =
+            step Uuid.uuidGenerator currentSeed
+    in
+        { model
+            | activities = Activity newUuid newActivityName newActivityQuadrant newActivityTimeSpan :: activities
+            , currentSeed = newSeed
+        }
 
 
 
@@ -224,4 +245,5 @@ type alias ViewData =
 type alias QuadrantModel =
     { activities : List Activity
     , viewData : ViewData
+    , currentSeed : Seed
     }
