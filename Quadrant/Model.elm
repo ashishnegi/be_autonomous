@@ -171,14 +171,25 @@ getQuadrantViewData viewData quadrantType =
             viewData.q4Quadrant
 
 
-canGenerateReport : QuadrantModel -> Bool
-canGenerateReport model =
+shouldGenerateReport : QuadrantModel -> Bool
+shouldGenerateReport model =
     case model.viewData.viewMode of
         ViewReportMode ->
             not <| List.isEmpty model.activities
 
         _ ->
             False
+
+
+
+canGenerateReport : QuadrantModel -> Bool
+canGenerateReport model =
+    case model.viewData.viewMode of
+        ViewReportMode ->
+            False
+
+        _ ->
+            not <| List.isEmpty model.activities
 
 
 

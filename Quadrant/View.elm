@@ -4,7 +4,7 @@ import Quadrant.Model as QM exposing (QuadrantModel, Activity)
 import Quadrant.Message as QMsg exposing (Msg)
 import Html exposing (Html, div, text, button, input, fieldset, label)
 import Html.Events exposing (onClick, onInput)
-import Html.Attributes exposing (placeholder, name, style, type_)
+import Html.Attributes exposing (placeholder, name, style, type_, disabled)
 import String
 
 
@@ -126,7 +126,7 @@ rawView model =
 
 renderReportGeneration : QuadrantModel -> Html Msg
 renderReportGeneration model =
-    if QM.canGenerateReport model then
+    if QM.shouldGenerateReport model then
         let
             report =
                 QM.quadrantRatioTimes model.activities
@@ -134,10 +134,14 @@ renderReportGeneration model =
             div []
                 (List.append
                     (List.map renderReportResult report)
-                    [ button [ onClick QMsg.ToCreateActivityMode ] [ text "Collapse"]])
+                    [ button [ onClick QMsg.ToCreateActivityMode ] [ text "Collapse" ] ]
+                )
     else
         div []
-            [ button [ onClick QMsg.GenerateReport ] [ text "GenerateReport" ] ]
+            [ button [ onClick QMsg.GenerateReport
+                     , disabled <| not <| QM.canGenerateReport model
+                     ]
+                  [ text "GenerateReport" ] ]
 
 
 renderReportResult : QM.Result -> Html Msg
