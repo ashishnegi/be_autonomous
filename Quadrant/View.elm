@@ -4,7 +4,7 @@ import Quadrant.Model as QM exposing (QuadrantModel, Activity)
 import Quadrant.Message as QMsg exposing (Msg)
 import Html exposing (Html, div, text, button, input, fieldset, label)
 import Html.Events exposing (onClick, onInput)
-import Html.Attributes exposing (placeholder, name, style, type_, disabled, checked)
+import Html.Attributes exposing (placeholder, name, style, type_, disabled, checked, value)
 import String
 import Dropdown
 
@@ -89,14 +89,15 @@ renderNewActivityInput model =
             [ type_ "number"
             , onInput QMsg.NewActivityTimeSpan
             , placeholder "Mins spent on activity"
+            , value (toString model.viewData.newActivityTimeSpan)
             ]
             []
-        , text " in "
+        , text " minutes in "
         , Html.map QMsg.TimeRangeMsg
             (Dropdown.view QMsg.dropDownConfig
                 model.viewData.newActivityTimeRangeState
                 QM.timeRange
-                (Just QM.Day)
+                model.viewData.newActivityTimeRange
             )
         , button [ onClick QMsg.NewActivity ] [ text "Create Activity" ]
         ]

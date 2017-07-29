@@ -73,9 +73,4 @@ toggleExpand quadrantType viewData =
 
 convertToInt : String -> Int
 convertToInt num =
-    case String.toInt num of
-        Err msg ->
-            0
-
-        Ok v ->
-            v
+    Result.withDefault 0 (String.toInt num)
