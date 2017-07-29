@@ -6,6 +6,5 @@ Quadrant modelling :
 
 
 Todo :
-1) Tests
 2) CSS
 3) Landing page.

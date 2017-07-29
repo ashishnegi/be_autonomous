@@ -35,7 +35,7 @@ init =
             []
             (QM.ViewData ""
                 QM.UrgentAndImportant
-                200
+                30
                 (Dropdown.newState "new-activity-dropdown")
                 QM.Day
                 collapseView
