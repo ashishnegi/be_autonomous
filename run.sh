@@ -1,1 +1,1 @@
-elm-live Main.elm --open
+elm-live Main.elm --open --debug

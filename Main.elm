@@ -6,7 +6,7 @@ import Quadrant.Message as QMsg
 import Quadrant.Update as QUpd
 import Quadrant.View as QV
 import Random.Pcg exposing (initialSeed)
-
+import Dropdown
 
 main =
     program
@@ -33,7 +33,17 @@ init =
     in
         ( QM.QuadrantModel
             []
-            (QM.ViewData "" QM.UrgentAndImportant 200 collapseView collapseView collapseView collapseView QM.CreateActivityMode)
+            (QM.ViewData ""
+                QM.UrgentAndImportant
+                200
+                (Dropdown.newState "new-activity-dropdown")
+                (Just QM.Day)
+                collapseView
+                collapseView
+                collapseView
+                collapseView
+                QM.CreateActivityMode
+            )
             (initialSeed 0)
         , Cmd.none
         )

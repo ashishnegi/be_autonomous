@@ -4,3 +4,9 @@ Quadrant modelling :
 2) Each has some information.
 3) Choose your quadrant.
 
+
+Todo :
+0) input for TimeSpan
+1) Tests
+2) CSS
+3) Landing page.

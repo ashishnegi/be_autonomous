@@ -2,6 +2,7 @@ module Quadrant.Update exposing (update)
 
 import Quadrant.Message exposing (..)
 import Quadrant.Model exposing (..)
+import Dropdown
 
 
 update : Msg -> QuadrantModel -> ( QuadrantModel, Cmd Msg )
@@ -18,7 +19,7 @@ update msg model =
                 ( { model | viewData = { viewData | newActivityQuadrant = quadrant } }, Cmd.none )
 
             NewActivityTimeSpan timeSpan ->
-                ( { model | viewData = { viewData | newActivityTimeSpan = timeSpan } }, Cmd.none )
+                ( { model | viewData = { viewData | newActivityTimeSpan = convertToInt timeSpan } }, Cmd.none )
 
             NewActivity ->
                 ( commitNewActivity model, Cmd.none )
@@ -34,6 +35,17 @@ update msg model =
 
             DeleteActivity activityId ->
                 ( { model | activities = List.filter (\x -> x.id /= activityId) model.activities }, Cmd.none )
+
+
+            TimeRangeMsg msg ->
+                let
+                    ( updated, cmd ) =
+                        Dropdown.update dropDownConfig msg model.viewData.newActivityTimeRangeState
+                in
+                    ( { model | viewData = { viewData | newActivityTimeRangeState = updated } }, cmd )
+
+            TimeRangeSelect timeRangeVal ->
+                ( { model | viewData = { viewData | newActivityTimeRange = timeRangeVal } }, Cmd.none )
 
 
 toggleExpand : QuadrantType -> ViewData -> ViewData
@@ -57,3 +69,13 @@ toggleExpand quadrantType viewData =
 
             NotUrgentNotImportant ->
                 { viewData | q4Quadrant = newQuadrantViewData }
+
+
+convertToInt : String -> Int
+convertToInt num =
+    case String.toInt num of
+        Err msg ->
+            0
+
+        Ok v ->
+            v

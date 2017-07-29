@@ -6,6 +6,7 @@ import Html exposing (Html, div, text, button, input, fieldset, label)
 import Html.Events exposing (onClick, onInput)
 import Html.Attributes exposing (placeholder, name, style, type_, disabled, checked)
 import String
+import Dropdown
 
 
 view : QuadrantModel -> Html Msg
@@ -84,6 +85,19 @@ renderNewActivityInput model =
             , radio "Urgent but not Important" (QMsg.NewActivityQuadrant QM.UrgentNotImportant) (model.viewData.newActivityQuadrant == QM.UrgentNotImportant)
             , radio "Not Urgent and not Important" (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant) (model.viewData.newActivityQuadrant == QM.NotUrgentNotImportant)
             ]
+        , input
+            [ type_ "number"
+            , onInput QMsg.NewActivityTimeSpan
+            , placeholder "Mins spent on activity"
+            ]
+            []
+        , text " in "
+        , Html.map QMsg.TimeRangeMsg
+            (Dropdown.view QMsg.dropDownConfig
+                model.viewData.newActivityTimeRangeState
+                QM.timeRange
+                (Just QM.Day)
+            )
         , button [ onClick QMsg.NewActivity ] [ text "Create Activity" ]
         ]
 

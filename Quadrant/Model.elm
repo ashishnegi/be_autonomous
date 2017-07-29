@@ -2,6 +2,7 @@ module Quadrant.Model exposing (..)
 
 import Uuid
 import Random.Pcg exposing (Seed, step)
+import Dropdown
 
 
 {-
@@ -234,6 +235,8 @@ type alias ViewData =
     { newActivityName : Name
     , newActivityQuadrant : QuadrantType
     , newActivityTimeSpan : TimeSpan
+    , newActivityTimeRangeState : Dropdown.State
+    , newActivityTimeRange : Maybe TimeRange
     , q1Quadrant : QuadrantView
     , q2Quadrant : QuadrantView
     , q3Quadrant : QuadrantView
@@ -247,3 +250,19 @@ type alias QuadrantModel =
     , viewData : ViewData
     , currentSeed : Seed
     }
+
+
+type TimeRange
+    = Day
+    | Week
+    | Month
+
+
+timeRange : List TimeRange
+timeRange =
+    [ Day, Week, Month ]
+
+
+timeRangeToName : TimeRange -> String
+timeRangeToName =
+    toString
