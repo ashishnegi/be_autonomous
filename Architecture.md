@@ -6,7 +6,6 @@ Quadrant modelling :
 
 
 Todo :
-0) input for TimeSpan
 1) Tests
 2) CSS
 3) Landing page.

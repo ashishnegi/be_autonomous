@@ -19,7 +19,7 @@ update msg model =
                 ( { model | viewData = { viewData | newActivityQuadrant = quadrant } }, Cmd.none )
 
             NewActivityTimeSpan timeSpan ->
-                ( { model | viewData = { viewData | newActivityTimeSpan = convertToInt timeSpan } }, Cmd.none )
+                ( { model | viewData = { viewData | newActivityTimeSpan = convertToFloat timeSpan } }, Cmd.none )
 
             NewActivity ->
                 ( commitNewActivity model, Cmd.none )
@@ -45,7 +45,7 @@ update msg model =
                     ( { model | viewData = { viewData | newActivityTimeRangeState = updated } }, cmd )
 
             TimeRangeSelect timeRangeVal ->
-                ( { model | viewData = { viewData | newActivityTimeRange = timeRangeVal } }, Cmd.none )
+                ( { model | viewData = { viewData | newActivityTimeRange = Maybe.withDefault Day timeRangeVal } }, Cmd.none )
 
 
 toggleExpand : QuadrantType -> ViewData -> ViewData
@@ -71,6 +71,6 @@ toggleExpand quadrantType viewData =
                 { viewData | q4Quadrant = newQuadrantViewData }
 
 
-convertToInt : String -> Int
-convertToInt num =
-    Result.withDefault 0 (String.toInt num)
+convertToFloat : String -> Float
+convertToFloat num =
+    Result.withDefault 0 (String.toFloat num)

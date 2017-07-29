@@ -53,10 +53,10 @@ getQuadrantType urgency importance =
             NotUrgentNotImportant
 
 
-{-| TimeSpan : number of seconds
+{-| TimeSpan : number of minute
 -}
 type alias TimeSpan =
-    Int
+    Float
 
 
 type alias Id =
@@ -142,16 +142,11 @@ quadrantRatioTimes activities =
         q4Time =
             sumFn (List.filter isQ4 activities)
     in
-        [ { quadrant = UrgentAndImportant, ratio = q1Time // totalTimeSpent }
-        , { quadrant = ImportantNotUrgent, ratio = q2Time // totalTimeSpent }
-        , { quadrant = UrgentNotImportant, ratio = q3Time // totalTimeSpent }
-        , { quadrant = NotUrgentNotImportant, ratio = q4Time // totalTimeSpent }
+        [ { quadrant = UrgentAndImportant, ratio = q1Time / totalTimeSpent }
+        , { quadrant = ImportantNotUrgent, ratio = q2Time / totalTimeSpent }
+        , { quadrant = UrgentNotImportant, ratio = q3Time / totalTimeSpent }
+        , { quadrant = NotUrgentNotImportant, ratio = q4Time / totalTimeSpent }
         ]
-
-
-(//) : Int -> Int -> Float
-(//) a b =
-    Basics.toFloat a / Basics.toFloat b
 
 
 totalTime : List Activity -> TimeSpan
@@ -202,16 +197,32 @@ commitNewActivity model =
         { activities, viewData, currentSeed } =
             model
 
-        { newActivityName, newActivityQuadrant, newActivityTimeSpan } =
+        { newActivityName, newActivityQuadrant, newActivityTimeSpan, newActivityTimeRange } =
             viewData
 
         ( newUuid, newSeed ) =
             step Uuid.uuidGenerator currentSeed
+
+        time =
+            timePerDay newActivityTimeSpan newActivityTimeRange
     in
         { model
-            | activities = Activity newUuid newActivityName newActivityQuadrant newActivityTimeSpan :: activities
+            | activities = Activity newUuid newActivityName newActivityQuadrant time :: activities
             , currentSeed = newSeed
         }
+
+
+timePerDay : TimeSpan -> TimeRange -> TimeSpan
+timePerDay span range =
+    case range of
+        Day ->
+            span
+
+        Week ->
+            span / 7
+
+        Month ->
+            span / 30
 
 
 
@@ -236,7 +247,7 @@ type alias ViewData =
     , newActivityQuadrant : QuadrantType
     , newActivityTimeSpan : TimeSpan
     , newActivityTimeRangeState : Dropdown.State
-    , newActivityTimeRange : Maybe TimeRange
+    , newActivityTimeRange : TimeRange
     , q1Quadrant : QuadrantView
     , q2Quadrant : QuadrantView
     , q3Quadrant : QuadrantView

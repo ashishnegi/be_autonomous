@@ -97,7 +97,7 @@ renderNewActivityInput model =
             (Dropdown.view QMsg.dropDownConfig
                 model.viewData.newActivityTimeRangeState
                 QM.timeRange
-                model.viewData.newActivityTimeRange
+                (Just model.viewData.newActivityTimeRange)
             )
         , button [ onClick QMsg.NewActivity ] [ text "Create Activity" ]
         ]
