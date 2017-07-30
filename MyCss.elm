@@ -18,11 +18,9 @@ css =
     [ body
         [ overflowX auto
         , minWidth (px 1280)
-        , color (hex "EE11EE")
         ]
     , id Page
-        [ backgroundColor (rgb 200 128 64)
-        , color (hex "FF0000")
+        [ color (hex "CCFFFF")
         , width (pct 100)
         , height (pct 100)
         , boxSizing borderBox
