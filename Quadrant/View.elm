@@ -8,10 +8,16 @@ import Html.Attributes exposing (placeholder, name, style, type_, disabled, chec
 import String
 import Dropdown
 
+import Html.CssHelpers
+import MyCss
+
+{ id, class, classList } =
+    Html.CssHelpers.withNamespace "lifeview"
+
 
 view : QuadrantModel -> Html Msg
 view model =
-    div []
+    div [ id MyCss.Page ]
         [ renderQuadrants model
         , renderNewActivityInput model
         , renderReportGeneration model
