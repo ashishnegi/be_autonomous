@@ -9,8 +9,10 @@ import String
 import Dropdown
 import Material
 import Material.Button as Button
+import Material.Textfield as TextField
 import Material.Icon as Icon
 import Material.Options as Options
+import Material.Toggles as Toggles
 import Html.CssHelpers
 
 
@@ -90,22 +92,27 @@ renderNewActivityInput : QuadrantModel -> Html Msg
 renderNewActivityInput model =
     div []
         [ text "Create new Activity:"
-        , input
-            [ onInput QMsg.NewActivityText
-            , placeholder "New task/goal"
+        , TextField.render
+            QMsg.Mdl
+            [ 0 ]
+            model.viewData.mdl
+            [ Options.onInput QMsg.NewActivityText
+            , TextField.label "New task/goal"
             ]
             []
         , fieldset []
-            [ radio "Urgent and Important" (QMsg.NewActivityQuadrant QM.UrgentAndImportant) (model.viewData.newActivityQuadrant == QM.UrgentAndImportant)
-            , radio "Not Urgent but Important" (QMsg.NewActivityQuadrant QM.ImportantNotUrgent) (model.viewData.newActivityQuadrant == QM.ImportantNotUrgent)
-            , radio "Urgent but not Important" (QMsg.NewActivityQuadrant QM.UrgentNotImportant) (model.viewData.newActivityQuadrant == QM.UrgentNotImportant)
-            , radio "Not Urgent and not Important" (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant) (model.viewData.newActivityQuadrant == QM.NotUrgentNotImportant)
+            [ quadrantRadio model.viewData "Urgent and Important" 10 (QMsg.NewActivityQuadrant QM.UrgentAndImportant) (model.viewData.newActivityQuadrant == QM.UrgentAndImportant)
+            , quadrantRadio model.viewData "Not Urgent but Important" 11 (QMsg.NewActivityQuadrant QM.ImportantNotUrgent) (model.viewData.newActivityQuadrant == QM.ImportantNotUrgent)
+            , quadrantRadio model.viewData "Urgent but not Important" 12 (QMsg.NewActivityQuadrant QM.UrgentNotImportant) (model.viewData.newActivityQuadrant == QM.UrgentNotImportant)
+            , quadrantRadio model.viewData "Not Urgent and not Important" 13 (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant) (model.viewData.newActivityQuadrant == QM.NotUrgentNotImportant)
             ]
-        , input
-            [ type_ "number"
-            , onInput QMsg.NewActivityTimeSpan
-            , placeholder "Mins spent on activity"
-            , value (toString model.viewData.newActivityTimeSpan)
+        , TextField.render
+            QMsg.Mdl
+            [ 1 ]
+            model.viewData.mdl
+            [ Options.onInput QMsg.NewActivityTimeSpan
+            , TextField.label "Mins spent on activity"
+            , TextField.value (toString model.viewData.newActivityTimeSpan)
             ]
             []
         , text " minutes in "
@@ -160,15 +167,19 @@ renderActivity viewData activity =
             [ text "Delete" ]
         ]
 
+quadrantRadio = radio "new-activity-group"
 
-radio : String -> msg -> Bool -> Html msg
-radio value msg isChecked =
-    label
-        [ style [ ( "padding", "20px" ) ]
+radio : String -> QM.ViewData -> String -> Int -> QMsg.Msg -> Bool -> Html QMsg.Msg
+radio group viewData value index msg isChecked =
+    Toggles.radio QMsg.Mdl
+        [ index ]
+        viewData.mdl
+        [ Toggles.value isChecked
+        , Toggles.group group
+        , Toggles.ripple
+        , Options.onToggle msg
         ]
-        [ input [ type_ "radio", name "font-size", onClick msg, checked isChecked ] []
-        , text value
-        ]
+        [ text value ]
 
 
 rawView : QuadrantModel -> Html Msg
