@@ -12,7 +12,6 @@ import Material.Button as Button
 import Material.Icon as Icon
 import Material.Options as Options
 import Html.CssHelpers
-import MyCss
 
 
 { id, class, classList } =
@@ -59,7 +58,7 @@ renderQuadrant quadrantType model activities =
             QM.getQuadrantViewData model.viewData quadrantType
     in
         if quadrantViewData.expanded then
-            renderQuadrantExpanded quadrantType activities
+            renderQuadrantExpanded quadrantType activities model.viewData
         else
             renderQuadrantCollapse quadrantType activities model.viewData
 
@@ -81,7 +80,8 @@ renderQuadrantCollapse quadrantType activities viewData =
             viewData.mdl
             [ Button.raised
             , Button.colored
-            , Options.onClick (QMsg.ExpandQuadrant quadrantType) ]
+            , Options.onClick (QMsg.ExpandQuadrant quadrantType)
+            ]
             [ text "Expand" ]
         ]
 
@@ -115,28 +115,49 @@ renderNewActivityInput model =
                 QM.timeRange
                 (Just model.viewData.newActivityTimeRange)
             )
-        , button [ onClick QMsg.NewActivity ] [ text "Create Activity" ]
+        , Button.render QMsg.Mdl
+            [ 1 ]
+            model.viewData.mdl
+            [ Button.raised
+            , Button.colored
+            , Options.onClick QMsg.NewActivity
+            ]
+            [ text "Create Activity" ]
         ]
 
 
-renderQuadrantExpanded : QM.QuadrantType -> List Activity -> Html Msg
-renderQuadrantExpanded quadrantType activities =
+renderQuadrantExpanded : QM.QuadrantType -> List Activity -> QM.ViewData -> Html Msg
+renderQuadrantExpanded quadrantType activities viewData =
     div []
         [ String.concat [ "<<<<<<<", (toString quadrantType), "<<<<<<<<" ]
             |> text
         , div []
-            (List.map renderActivity activities)
+            (List.map (renderActivity viewData) activities)
         , text ">>>>>>>>>>>>>>>>>"
-        , button [ onClick (QMsg.ExpandQuadrant quadrantType) ] [ text "Collapse" ]
+        , Button.render QMsg.Mdl
+            [ 5 ]
+            viewData.mdl
+            [ Button.raised
+            , Button.colored
+            , Options.onClick (QMsg.ExpandQuadrant quadrantType)
+            ]
+            [ text "Collapse" ]
         ]
 
 
-renderActivity : Activity -> Html Msg
-renderActivity activity =
+renderActivity : QM.ViewData -> Activity -> Html Msg
+renderActivity viewData activity =
     div []
         [ text activity.name
         , toString activity.timeSpent |> text
-        , button [ onClick (QMsg.DeleteActivity activity.id) ] [ text "Delete" ]
+        , Button.render QMsg.Mdl
+            [ 6 ]
+            viewData.mdl
+            [ Button.raised
+            , Button.colored
+            , Options.onClick (QMsg.DeleteActivity activity.id)
+            ]
+            [ text "Delete" ]
         ]
 
 
@@ -166,13 +187,28 @@ renderReportGeneration model =
             div []
                 (List.append
                     (List.map renderReportResult report)
-                    [ button [ onClick QMsg.ToCreateActivityMode ] [ text "Collapse" ] ]
+                    [ Button.render QMsg.Mdl
+                        [ 2 ]
+                        model.viewData.mdl
+                        [ Button.raised
+                        , Button.colored
+                        , Options.onClick QMsg.ToCreateActivityMode
+                        ]
+                        [ text "Collapse" ]
+                    ]
                 )
     else
         div []
-            [ button
-                [ onClick QMsg.GenerateReport
-                , disabled <| not <| QM.canGenerateReport model
+            [ Button.render QMsg.Mdl
+                [ 3 ]
+                model.viewData.mdl
+                [ Button.raised
+                , Button.colored
+                , (if not <| QM.canGenerateReport model then
+                    Button.disabled
+                   else
+                    Options.onClick QMsg.GenerateReport
+                  )
                 ]
                 [ text "GenerateReport" ]
             ]
