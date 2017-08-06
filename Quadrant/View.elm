@@ -13,6 +13,7 @@ import Material.Textfield as TextField
 import Material.Icon as Icon
 import Material.Options as Options
 import Material.Toggles as Toggles
+import Material.List as MList
 import Html.CssHelpers
 
 
@@ -138,9 +139,10 @@ renderQuadrantExpanded quadrantType activities viewData =
     div []
         [ String.concat [ "<<<<<<<", (toString quadrantType), "<<<<<<<<" ]
             |> text
-        , div []
-            (List.map (renderActivity viewData) activities)
-        , text ">>>>>>>>>>>>>>>>>"
+        , MList.ul []
+            (List.map (\x -> MList.li [] [ MList.content [] ( renderActivity viewData x ) ])
+                activities
+            )
         , Button.render QMsg.Mdl
             [ 5 ]
             viewData.mdl
@@ -152,22 +154,24 @@ renderQuadrantExpanded quadrantType activities viewData =
         ]
 
 
-renderActivity : QM.ViewData -> Activity -> Html Msg
+renderActivity : QM.ViewData -> Activity -> List (Html Msg)
 renderActivity viewData activity =
-    div []
-        [ text activity.name
-        , toString activity.timeSpent |> text
-        , Button.render QMsg.Mdl
-            [ 6 ]
-            viewData.mdl
-            [ Button.raised
-            , Button.colored
-            , Options.onClick (QMsg.DeleteActivity activity.id)
-            ]
-            [ text "Delete" ]
+    [ text activity.name
+    , toString activity.timeSpent |> text
+    , Button.render QMsg.Mdl
+        [ 6 ]
+        viewData.mdl
+        [ Button.raised
+        , Button.colored
+        , Options.onClick (QMsg.DeleteActivity activity.id)
         ]
+        [ text "Delete" ]
+    ]
 
-quadrantRadio = radio "new-activity-group"
+
+quadrantRadio =
+    radio "new-activity-group"
+
 
 radio : String -> QM.ViewData -> String -> Int -> QMsg.Msg -> Bool -> Html QMsg.Msg
 radio group viewData value index msg isChecked =
