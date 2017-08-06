@@ -7,9 +7,13 @@ import Html.Events exposing (onClick, onInput)
 import Html.Attributes exposing (placeholder, name, style, type_, disabled, checked, value)
 import String
 import Dropdown
-
+import Material
+import Material.Button as Button
+import Material.Icon as Icon
+import Material.Options as Options
 import Html.CssHelpers
 import MyCss
+
 
 { id, class, classList } =
     Html.CssHelpers.withNamespace "lifeview"
@@ -17,7 +21,7 @@ import MyCss
 
 view : QuadrantModel -> Html Msg
 view model =
-    div [ id MyCss.Page ]
+    div []
         [ renderQuadrants model
         , renderNewActivityInput model
         , renderReportGeneration model
@@ -57,11 +61,11 @@ renderQuadrant quadrantType model activities =
         if quadrantViewData.expanded then
             renderQuadrantExpanded quadrantType activities
         else
-            renderQuadrantCollapse quadrantType activities
+            renderQuadrantCollapse quadrantType activities model.viewData
 
 
-renderQuadrantCollapse : QM.QuadrantType -> List Activity -> Html Msg
-renderQuadrantCollapse quadrantType activities =
+renderQuadrantCollapse : QM.QuadrantType -> List Activity -> QM.ViewData -> Html Msg
+renderQuadrantCollapse quadrantType activities viewData =
     div []
         [ (List.length activities
             |> toString
@@ -72,7 +76,13 @@ renderQuadrantCollapse quadrantType activities =
             |> toString
             |> String.append "\nTime : "
             |> text
-        , button [ onClick (QMsg.ExpandQuadrant quadrantType) ] [ text "Expand" ]
+        , Button.render QMsg.Mdl
+            [ 0 ]
+            viewData.mdl
+            [ Button.raised
+            , Button.colored
+            , Options.onClick (QMsg.ExpandQuadrant quadrantType) ]
+            [ text "Expand" ]
         ]
 
 

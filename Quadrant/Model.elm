@@ -3,6 +3,7 @@ module Quadrant.Model exposing (..)
 import Uuid
 import Random.Pcg exposing (Seed, step)
 import Dropdown
+import Material
 
 
 {-
@@ -253,6 +254,7 @@ type alias ViewData =
     , q3Quadrant : QuadrantView
     , q4Quadrant : QuadrantView
     , viewMode : ViewMode
+    , mdl : Material.Model
     }
 
 

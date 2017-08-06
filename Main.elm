@@ -4,7 +4,6 @@ import Html exposing (Html, program)
 import Model exposing (Model)
 import Update exposing (update)
 import View exposing (view)
-
 import Quadrant.Model as QM
 import Quadrant.Message as QMsg
 import Quadrant.Update as QUpd
@@ -21,6 +20,7 @@ main =
         , update = update
         , subscriptions = subscriptions
         }
+
 
 init =
     let
@@ -40,6 +40,7 @@ init =
                     collapseView
                     collapseView
                     QM.CreateActivityMode
+                    Material.model
                 )
                 (initialSeed 0)
             )

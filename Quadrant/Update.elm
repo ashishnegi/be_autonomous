@@ -3,7 +3,7 @@ module Quadrant.Update exposing (update)
 import Quadrant.Message exposing (..)
 import Quadrant.Model exposing (..)
 import Dropdown
-
+import Material
 
 update : Msg -> QuadrantModel -> ( QuadrantModel, Cmd Msg )
 update msg model =
@@ -46,6 +46,10 @@ update msg model =
 
             TimeRangeSelect timeRangeVal ->
                 ( { model | viewData = { viewData | newActivityTimeRange = Maybe.withDefault Day timeRangeVal } }, Cmd.none )
+
+            Mdl msg_ ->
+                let (viewData_, cmds) = Material.update Mdl msg_ model.viewData
+                in ( { model | viewData = viewData_ }, cmds )
 
 
 toggleExpand : QuadrantType -> ViewData -> ViewData

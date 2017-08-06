@@ -3,6 +3,7 @@ module Update exposing (..)
 import Quadrant.Update as QU
 import Model exposing (Model)
 import Message as Msg
+import Material
 
 
 update : Msg.Msg -> Model -> ( Model, Cmd Msg.Msg )
@@ -14,3 +15,6 @@ update msg model =
                     QU.update qmsg model.quadrant
             in
                 ( { model | quadrant = quad }, Cmd.map Msg.Quadrant quadCmd )
+
+        Msg.Mdl msg_ ->
+            Material.update Msg.Mdl msg_ model
