@@ -15,6 +15,7 @@ import Material.Options as Options
 import Material.Toggles as Toggles
 import Material.List as MList
 import Html.CssHelpers
+import Material.Grid as Grid exposing (grid, cell, size, Device(..))
 
 
 { id, class, classList } =
@@ -23,10 +24,14 @@ import Html.CssHelpers
 
 view : QuadrantModel -> Html Msg
 view model =
-    div []
-        [ renderQuadrants model
-        , renderNewActivityInput model
-        , renderReportGeneration model
+    Grid.grid
+        []
+        [ Grid.cell [ Grid.size Grid.All 4 ]
+            [ renderNewActivityInput model ]
+        , Grid.cell [ Grid.size Grid.All 12 ]
+            [ renderQuadrants model ]
+        , Grid.cell [ Grid.size Grid.All 4 ]
+            [ renderReportGeneration model ]
         ]
 
 
@@ -45,16 +50,17 @@ renderQuadrants model =
         q4Activities =
             List.filter QM.isQ4 model.activities
     in
-        div []
+        Grid.grid []
             [ renderQuadrant QM.UrgentAndImportant model q1Activities
             , renderQuadrant QM.ImportantNotUrgent model q2Activities
             , renderQuadrant QM.UrgentNotImportant model q3Activities
             , renderQuadrant QM.NotUrgentNotImportant model q4Activities
-            , rawView model
+            , Grid.cell [ Grid.size Grid.All 12 ]
+                [(rawView model)]
             ]
 
 
-renderQuadrant : QM.QuadrantType -> QuadrantModel -> List Activity -> Html Msg
+renderQuadrant : QM.QuadrantType -> QuadrantModel -> List Activity -> Grid.Cell Msg
 renderQuadrant quadrantType model activities =
     let
         quadrantViewData =
@@ -66,20 +72,19 @@ renderQuadrant quadrantType model activities =
             renderQuadrantCollapse quadrantType activities model.viewData
 
 
-renderQuadrantCollapse : QM.QuadrantType -> List Activity -> QM.ViewData -> Html Msg
+renderQuadrantCollapse : QM.QuadrantType -> List Activity -> QM.ViewData -> Grid.Cell Msg
 renderQuadrantCollapse quadrantType activities viewData =
-    div []
-        [ (List.length activities
+    Grid.cell [ Grid.size Grid.All 6 ]
+        [ List.length activities
             |> toString
             |> String.append "Total : "
             |> text
-          )
         , QM.totalTime activities
             |> toString
             |> String.append "\nTime : "
             |> text
         , Button.render QMsg.Mdl
-            [ 0 ]
+            [ 7 ]
             viewData.mdl
             [ Button.raised
             , Button.colored
@@ -98,7 +103,7 @@ renderNewActivityInput model =
             [ 0 ]
             model.viewData.mdl
             [ Options.onInput QMsg.NewActivityText
-            , TextField.label "New task/goal"
+            , TextField.label "New task/goal" -- Todo : this keeps showing up even in the case of input in text.
             ]
             []
         , fieldset []
@@ -124,7 +129,7 @@ renderNewActivityInput model =
                 (Just model.viewData.newActivityTimeRange)
             )
         , Button.render QMsg.Mdl
-            [ 1 ]
+            [ 2 ]
             model.viewData.mdl
             [ Button.raised
             , Button.colored
@@ -134,13 +139,13 @@ renderNewActivityInput model =
         ]
 
 
-renderQuadrantExpanded : QM.QuadrantType -> List Activity -> QM.ViewData -> Html Msg
+renderQuadrantExpanded : QM.QuadrantType -> List Activity -> QM.ViewData -> Grid.Cell Msg
 renderQuadrantExpanded quadrantType activities viewData =
-    div []
+    Grid.cell [ Grid.size Grid.All 12 ]
         [ String.concat [ "<<<<<<<", (toString quadrantType), "<<<<<<<<" ]
             |> text
         , MList.ul []
-            (List.map (\x -> MList.li [] [ MList.content [] ( renderActivity viewData x ) ])
+            (List.map (\x -> MList.li [] [ MList.content [] (renderActivity viewData x) ])
                 activities
             )
         , Button.render QMsg.Mdl
@@ -203,7 +208,7 @@ renderReportGeneration model =
                 (List.append
                     (List.map renderReportResult report)
                     [ Button.render QMsg.Mdl
-                        [ 2 ]
+                        [ 3 ]
                         model.viewData.mdl
                         [ Button.raised
                         , Button.colored
@@ -215,7 +220,7 @@ renderReportGeneration model =
     else
         div []
             [ Button.render QMsg.Mdl
-                [ 3 ]
+                [ 4 ]
                 model.viewData.mdl
                 [ Button.raised
                 , Button.colored
