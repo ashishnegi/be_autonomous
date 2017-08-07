@@ -15,7 +15,14 @@ import Material.Options as Options
 import Material.Toggles as Toggles
 import Material.List as MList
 import Html.CssHelpers
-import Material.Grid as Grid exposing (grid, cell, size, Device(..))
+import Material.Grid as Grid
+import Material.Card as Card
+import Material.Color as Color
+
+
+white : Options.Property c m
+white =
+    Color.text Color.white
 
 
 { id, class, classList } =
@@ -56,7 +63,7 @@ renderQuadrants model =
             , renderQuadrant QM.UrgentNotImportant model q3Activities
             , renderQuadrant QM.NotUrgentNotImportant model q4Activities
             , Grid.cell [ Grid.size Grid.All 12 ]
-                [(rawView model)]
+                [ (rawView model) ]
             ]
 
 
@@ -72,26 +79,57 @@ renderQuadrant quadrantType model activities =
             renderQuadrantCollapse quadrantType activities model.viewData
 
 
+stringPrepend : String -> String -> String
+stringPrepend =
+    flip String.append
+
+
 renderQuadrantCollapse : QM.QuadrantType -> List Activity -> QM.ViewData -> Grid.Cell Msg
 renderQuadrantCollapse quadrantType activities viewData =
-    Grid.cell [ Grid.size Grid.All 6 ]
-        [ List.length activities
-            |> toString
-            |> String.append "Total : "
-            |> text
-        , QM.totalTime activities
-            |> toString
-            |> String.append "\nTime : "
-            |> text
-        , Button.render QMsg.Mdl
-            [ 7 ]
-            viewData.mdl
-            [ Button.raised
-            , Button.colored
-            , Options.onClick (QMsg.ExpandQuadrant quadrantType)
+    let
+        numActivities =
+            List.length activities
+                |> toString
+                |> stringPrepend " Activity in "
+
+        totalTime =
+            QM.totalTime activities
+                |> toString
+                |> stringPrepend " mins"
+    in
+        Grid.cell [ Grid.size Grid.All 6 ]
+            [ Card.view
+                [ Options.css "width" "400px"
+                , Color.background (Color.color Color.LightBlue Color.S400)
+                , Options.onClick (QMsg.ExpandQuadrant quadrantType)
+                ]
+                [ Card.title [] [ Card.head [ white ] [ text <| toString quadrantType ] ]
+                , Card.text [ white ]
+                    [ text numActivities
+                    , text totalTime
+                    ]
+                ]
             ]
-            [ text "Expand" ]
-        ]
+
+
+
+-- [ List.length activities
+--     |> toString
+--     |> String.append "Total : "
+--     |> text
+-- , QM.totalTime activities
+--     |> toString
+--     |> String.append "\nTime : "
+--     |> text
+-- , Button.render QMsg.Mdl
+--     [ 7 ]
+--     viewData.mdl
+--     [ Button.raised
+--     , Button.colored
+--     , Options.onClick (QMsg.ExpandQuadrant quadrantType)
+--     ]
+--     [ text "Expand" ]
+-- ]
 
 
 renderNewActivityInput : QuadrantModel -> Html Msg
