@@ -1,6 +1,5 @@
 module Quadrant.Model exposing (..)
 
-import Dropdown
 import Material
 import Random.Pcg exposing (Seed, step)
 import Uuid
@@ -267,7 +266,6 @@ type alias ViewData =
     , newActivityImportant : Bool
     , newActivityUrgent : Bool
     , newActivityTimeSpan : TimeSpan
-    , newActivityTimeRangeState : Dropdown.State
     , newActivityTimeRange : TimeRange
     , q1Quadrant : QuadrantView
     , q2Quadrant : QuadrantView

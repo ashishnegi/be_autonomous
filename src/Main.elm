@@ -1,6 +1,5 @@
 module Main exposing (main)
 
-import Dropdown
 import Html exposing (Html, program)
 import Material
 import Material.Select as Select
@@ -30,19 +29,19 @@ init =
     in
         ( Model
             (QM.QuadrantModel
-                [ { id = stringToUuid "0a431ce2-5c3b-4c66-8e00-cfd08cbe2e91", name = "how is it going.. how is it going.. how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
-                , { id = stringToUuid "79f14407-657d-4028-9ee7-a34dc07da535", name = "how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
-                , { id = stringToUuid "79f3a82b-0441-43ab-8359-b7aec537787d", name = "how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
-                , { id = stringToUuid "e9354ce5-8323-4ef6-bbac-994db21e3fc4", name = "how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
-                , { id = stringToUuid "48cce67d-a40b-4112-be49-a49cb9897201", name = "so whats up..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
-                ]
+                -- [ { id = stringToUuid "0a431ce2-5c3b-4c66-8e00-cfd08cbe2e91", name = "how is it going.. how is it going.. how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
+                -- , { id = stringToUuid "79f14407-657d-4028-9ee7-a34dc07da535", name = "how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
+                -- , { id = stringToUuid "79f3a82b-0441-43ab-8359-b7aec537787d", name = "how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
+                -- , { id = stringToUuid "e9354ce5-8323-4ef6-bbac-994db21e3fc4", name = "how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
+                -- , { id = stringToUuid "48cce67d-a40b-4112-be49-a49cb9897201", name = "so whats up..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
+                -- ]
+                []
                 (QM.ViewData ""
                     True
                     True
                     30
-                    (Dropdown.newState "new-activity-dropdown")
                     QM.Day
-                    (QM.QuadrantView True)
+                    collapseView
                     collapseView
                     collapseView
                     collapseView

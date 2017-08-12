@@ -1,6 +1,5 @@
 module Quadrant.Update exposing (update)
 
-import Dropdown
 import Material
 import Quadrant.Message exposing (..)
 import Quadrant.Model exposing (..)
