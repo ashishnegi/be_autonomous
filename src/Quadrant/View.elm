@@ -117,70 +117,72 @@ renderQuadrantCollapse quadrantType activities viewData =
 
 renderNewActivityInput : QuadrantModel -> Html Msg
 renderNewActivityInput model =
-    div []
-        [ TextField.render
-            QMsg.Mdl
-            QM.newActivityTextInputIndex
-            model.viewData.mdl
-            [ Options.onInput QMsg.NewActivityText
-            , TextField.label "Your new task/goal"
-            , TextField.value model.viewData.newActivityName
+    Grid.grid []
+        [ Grid.cell [ Grid.size Grid.All 12 ]
+            [ TextField.render
+                QMsg.Mdl
+                QM.newActivityTextInputIndex
+                model.viewData.mdl
+                [ Options.onInput QMsg.NewActivityText
+                , TextField.label "Your new task/goal"
+                , TextField.value model.viewData.newActivityName
+                ]
+                []
+            , Select.render QMsg.Mdl
+                QM.quadrantSelectIndex
+                model.viewData.mdl
+                [ Select.label "Quadrant of activity"
+                , Select.below
+                , Select.floatingLabel
+                , Select.ripple
+                , Select.value (QM.quadrantToName model.viewData.newActivityQuadrant)
+                ]
+                (QM.quadrantTypes
+                    |> List.map
+                        (\qt ->
+                            Select.item [ Item.onSelect (QMsg.NewActivityQuadrant qt) ]
+                                [ qt |> QM.quadrantToName |> text ]
+                        )
+                )
+            , TextField.render
+                QMsg.Mdl
+                QM.newActivityMinsIndex
+                model.viewData.mdl
+                [ Options.onInput QMsg.NewActivityTimeSpan
+                , Options.css "width" "60px"
+                , TextField.label "Mins spent on activity"
+                , TextField.value (toString model.viewData.newActivityTimeSpan)
+                ]
+                []
+            , text " minutes in "
+            , Select.render QMsg.Mdl
+                QM.timeRangeDropDownIndex
+                model.viewData.mdl
+                [ Select.label "Time range"
+                , Select.below
+                , Options.css "width" "100px"
+                , Select.floatingLabel
+                , Select.ripple
+                , Select.value (QM.timeRangeToName model.viewData.newActivityTimeRange)
+                ]
+                (QM.timeRange
+                    |> List.map
+                        (\tr ->
+                            Select.item
+                                [ Item.onSelect (QMsg.TimeRangeMsg tr)
+                                ]
+                                [ tr |> QM.timeRangeToName |> text ]
+                        )
+                )
+            , Button.render QMsg.Mdl
+                QM.newActivityCreateButtonIndex
+                model.viewData.mdl
+                [ Button.raised
+                , Button.colored
+                , Options.onClick QMsg.NewActivity
+                ]
+                [ text "Create Activity" ]
             ]
-            []
-        , Select.render QMsg.Mdl
-            QM.quadrantSelectIndex
-            model.viewData.mdl
-            [ Select.label "Quadrant of activity"
-            , Select.below
-            , Select.floatingLabel
-            , Select.ripple
-            , Select.value (QM.quadrantToName model.viewData.newActivityQuadrant)
-            ]
-            (QM.quadrantTypes
-                |> List.map
-                    (\qt ->
-                        Select.item [ Item.onSelect (QMsg.NewActivityQuadrant qt) ]
-                            [ qt |> QM.quadrantToName |> text ]
-                    )
-            )
-        , TextField.render
-            QMsg.Mdl
-            QM.newActivityMinsIndex
-            model.viewData.mdl
-            [ Options.onInput QMsg.NewActivityTimeSpan
-            , Options.css "width" "60px"
-            , TextField.label "Mins spent on activity"
-            , TextField.value (toString model.viewData.newActivityTimeSpan)
-            ]
-            []
-        , text " minutes in "
-        , Select.render QMsg.Mdl
-            QM.timeRangeDropDownIndex
-            model.viewData.mdl
-            [ Select.label "Time range"
-            , Select.below
-            , Options.css "width" "100px"
-            , Select.floatingLabel
-            , Select.ripple
-            , Select.value (QM.timeRangeToName model.viewData.newActivityTimeRange)
-            ]
-            (QM.timeRange
-                |> List.map
-                    (\tr ->
-                        Select.item
-                            [ Item.onSelect (QMsg.TimeRangeMsg tr)
-                            ]
-                            [ tr |> QM.timeRangeToName |> text ]
-                    )
-            )
-        , Button.render QMsg.Mdl
-            QM.newActivityCreateButtonIndex
-            model.viewData.mdl
-            [ Button.raised
-            , Button.colored
-            , Options.onClick QMsg.NewActivity
-            ]
-            [ text "Create Activity" ]
         ]
 
 

@@ -1,9 +1,9 @@
 module Update exposing (..)
 
-import Quadrant.Update as QU
-import Model exposing (Model)
-import Message as Msg
 import Material
+import Message as Msg
+import Model exposing (Model)
+import Quadrant.Update as QU
 
 
 update : Msg.Msg -> Model -> ( Model, Cmd Msg.Msg )

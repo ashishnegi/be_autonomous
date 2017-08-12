@@ -13,9 +13,9 @@ elm-install -t
 ./run.sh
 
 # Todo :
-1) dropdown : bug click outside should go away.
+~Done: 1) dropdown : bug click outside should go away.~
 2) create activity some prompt.
-3) help text  and over divs
+3) help text and over divs
 4) clicakable box card.
 5) mins Per day in card box.
 6) User using it to track : future or current.
