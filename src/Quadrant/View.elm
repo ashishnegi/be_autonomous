@@ -5,6 +5,7 @@ import Html.Attributes exposing (placeholder, name, style, type_, disabled, chec
 import Html.CssHelpers
 import Html.Events exposing (onClick, onInput)
 import Material
+import Material.Badge as Badge
 import Material.Button as Button
 import Material.Card as Card
 import Material.Color as Color
@@ -94,11 +95,11 @@ renderQuadrantCollapse quadrantType activities viewData =
         numActivities =
             List.length activities
                 |> toString
-                |> stringPrepend " Activity in "
 
         totalTime =
             QM.totalTime activities
                 |> toString
+                |> String.append " in "
                 |> stringPrepend " mins"
     in
         Grid.cell [ Grid.size Grid.All 6 ]
@@ -109,9 +110,15 @@ renderQuadrantCollapse quadrantType activities viewData =
                     viewData
                 , Color.background (Color.color Color.LightBlue Color.S400)
                 ]
-                [ Card.title [] [ Card.head [ white ] [ text <| toString quadrantType ] ]
+                [ Card.title []
+                    [ Card.head [ white ] [ text <| QM.quadrantToName quadrantType ]
+                    ]
                 , Card.text [ white ]
-                    [ text numActivities
+                    [ Card.subhead [ white ]
+                        [ Options.span
+                            [ Badge.add numActivities ]
+                            [ text "Activity" ]
+                        ]
                     , text totalTime
                     ]
                 ]
