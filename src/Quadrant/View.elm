@@ -2,7 +2,7 @@ module Quadrant.View exposing (view)
 
 import Quadrant.Model as QM exposing (QuadrantModel, Activity)
 import Quadrant.Message as QMsg exposing (Msg)
-import Html exposing (Html, div, text, button, input, fieldset, label)
+import Html exposing (Html, div, text, button, input, fieldset, label, p)
 import Html.Events exposing (onClick, onInput)
 import Html.Attributes exposing (placeholder, name, style, type_, disabled, checked, value)
 import String
@@ -19,7 +19,7 @@ import Html.CssHelpers
 import Material.Grid as Grid
 import Material.Card as Card
 import Material.Color as Color
-
+import Material.Typography as Typo
 
 white : Options.Property c m
 white =
@@ -117,13 +117,12 @@ renderQuadrantCollapse quadrantType activities viewData =
 renderNewActivityInput : QuadrantModel -> Html Msg
 renderNewActivityInput model =
     div []
-        [ text "Create new Activity:"
-        , TextField.render
+        [ TextField.render
             QMsg.Mdl
             QM.newActivityTextInputIndex
             model.viewData.mdl
             [ Options.onInput QMsg.NewActivityText
-            , TextField.label "New task/goal"
+            , TextField.label "Your new task/goal"
             , TextField.value model.viewData.newActivityName
             ]
             []
@@ -132,6 +131,8 @@ renderNewActivityInput model =
             model.viewData.mdl
             [ Select.label "Quadrant of activity"
             , Select.below
+            , Select.floatingLabel
+            , Select.ripple
             , Select.value (QM.quadrantToName model.viewData.newActivityQuadrant)
             ]
             (QM.quadrantTypes
@@ -141,18 +142,12 @@ renderNewActivityInput model =
                             [ qt |> QM.quadrantToName |> text ]
                     )
             )
-
-        -- , fieldset []
-        --     [ quadrantRadio model.viewData "Urgent and Important" QM.q1RadioSelectIndex (QMsg.NewActivityQuadrant QM.UrgentAndImportant) (model.viewData.newActivityQuadrant == QM.UrgentAndImportant)
-        --     , quadrantRadio model.viewData "Not Urgent but Important" QM.q2RadioSelectIndex (QMsg.NewActivityQuadrant QM.ImportantNotUrgent) (model.viewData.newActivityQuadrant == QM.ImportantNotUrgent)
-        --     , quadrantRadio model.viewData "Urgent but not Important" QM.q3RadioSelectIndex (QMsg.NewActivityQuadrant QM.UrgentNotImportant) (model.viewData.newActivityQuadrant == QM.UrgentNotImportant)
-        --     , quadrantRadio model.viewData "Not Urgent and not Important" QM.q4RadioSelectIndex (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant) (model.viewData.newActivityQuadrant == QM.NotUrgentNotImportant)
-        --     ]
         , TextField.render
             QMsg.Mdl
             QM.newActivityMinsIndex
             model.viewData.mdl
             [ Options.onInput QMsg.NewActivityTimeSpan
+            , Options.css "width" "60px"
             , TextField.label "Mins spent on activity"
             , TextField.value (toString model.viewData.newActivityTimeSpan)
             ]
@@ -163,9 +158,9 @@ renderNewActivityInput model =
             model.viewData.mdl
             [ Select.label "Time range"
             , Select.below
-
-            -- , Select.floatingLabel
-            -- , Select.ripple
+            , Options.css "width" "100px"
+            , Select.floatingLabel
+            , Select.ripple
             , Select.value (QM.timeRangeToName model.viewData.newActivityTimeRange)
             ]
             (QM.timeRange
@@ -190,9 +185,12 @@ renderNewActivityInput model =
 
 renderQuadrantExpanded : QM.QuadrantType -> List Activity -> QM.ViewData -> Grid.Cell Msg
 renderQuadrantExpanded quadrantType activities viewData =
-    Grid.cell [ Grid.size Grid.All 12 ]
-        [ String.concat [ "<<<<<<<", (toString quadrantType), "<<<<<<<<" ]
-            |> text
+    Grid.cell [ Grid.size Grid.All 6
+              , Grid.size Grid.Phone 12
+              ]
+        [ Options.styled p
+            [ Typo.title ]
+            [ quadrantType |> QM.quadrantToName |> text ]
         , MList.ul []
             (List.map (\x -> MList.li [] [ MList.content [] (renderActivity viewData x) ])
                 activities
