@@ -279,3 +279,47 @@ timeRange =
 timeRangeToName : TimeRange -> String
 timeRangeToName =
     toString
+
+
+newActivityTextInputIndex =
+    [ 0 ]
+
+
+newActivityMinsIndex =
+    [ 1 ]
+
+
+newActivityCreateButtonIndex =
+    [ 2 ]
+
+
+collapseQuadrantIndex =
+    [ 4 ]
+
+
+deleteActivityIndex =
+    [ 5 ]
+
+
+collapseReportIndex =
+    [ 6 ]
+
+
+generateReportIndex =
+    [ 7 ]
+
+
+q1RadioSelectIndex =
+    [ 8 ]
+
+
+q2RadioSelectIndex =
+    [ 9 ]
+
+
+q3RadioSelectIndex =
+    [ 10 ]
+
+
+q4RadioSelectIndex =
+    [ 11 ]

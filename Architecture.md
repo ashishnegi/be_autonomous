@@ -7,4 +7,5 @@ Quadrant modelling :
 
 Todo :
 2) CSS
+2.5) Make mocks and discuss with friends.
 3) Landing page.

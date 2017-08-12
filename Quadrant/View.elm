@@ -112,47 +112,28 @@ renderQuadrantCollapse quadrantType activities viewData =
             ]
 
 
-
--- [ List.length activities
---     |> toString
---     |> String.append "Total : "
---     |> text
--- , QM.totalTime activities
---     |> toString
---     |> String.append "\nTime : "
---     |> text
--- , Button.render QMsg.Mdl
---     [ 7 ]
---     viewData.mdl
---     [ Button.raised
---     , Button.colored
---     , Options.onClick (QMsg.ExpandQuadrant quadrantType)
---     ]
---     [ text "Expand" ]
--- ]
-
-
 renderNewActivityInput : QuadrantModel -> Html Msg
 renderNewActivityInput model =
     div []
         [ text "Create new Activity:"
         , TextField.render
             QMsg.Mdl
-            [ 0 ]
+            QM.newActivityTextInputIndex
             model.viewData.mdl
             [ Options.onInput QMsg.NewActivityText
             , TextField.label "New task/goal" -- Todo : this keeps showing up even in the case of input in text.
+            , TextField.value model.viewData.newActivityName
             ]
             []
         , fieldset []
-            [ quadrantRadio model.viewData "Urgent and Important" 10 (QMsg.NewActivityQuadrant QM.UrgentAndImportant) (model.viewData.newActivityQuadrant == QM.UrgentAndImportant)
-            , quadrantRadio model.viewData "Not Urgent but Important" 11 (QMsg.NewActivityQuadrant QM.ImportantNotUrgent) (model.viewData.newActivityQuadrant == QM.ImportantNotUrgent)
-            , quadrantRadio model.viewData "Urgent but not Important" 12 (QMsg.NewActivityQuadrant QM.UrgentNotImportant) (model.viewData.newActivityQuadrant == QM.UrgentNotImportant)
-            , quadrantRadio model.viewData "Not Urgent and not Important" 13 (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant) (model.viewData.newActivityQuadrant == QM.NotUrgentNotImportant)
+            [ quadrantRadio model.viewData "Urgent and Important" QM.q1RadioSelectIndex (QMsg.NewActivityQuadrant QM.UrgentAndImportant) (model.viewData.newActivityQuadrant == QM.UrgentAndImportant)
+            , quadrantRadio model.viewData "Not Urgent but Important" QM.q2RadioSelectIndex (QMsg.NewActivityQuadrant QM.ImportantNotUrgent) (model.viewData.newActivityQuadrant == QM.ImportantNotUrgent)
+            , quadrantRadio model.viewData "Urgent but not Important" QM.q3RadioSelectIndex (QMsg.NewActivityQuadrant QM.UrgentNotImportant) (model.viewData.newActivityQuadrant == QM.UrgentNotImportant)
+            , quadrantRadio model.viewData "Not Urgent and not Important" QM.q4RadioSelectIndex (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant) (model.viewData.newActivityQuadrant == QM.NotUrgentNotImportant)
             ]
         , TextField.render
             QMsg.Mdl
-            [ 1 ]
+            QM.newActivityMinsIndex
             model.viewData.mdl
             [ Options.onInput QMsg.NewActivityTimeSpan
             , TextField.label "Mins spent on activity"
@@ -167,7 +148,7 @@ renderNewActivityInput model =
                 (Just model.viewData.newActivityTimeRange)
             )
         , Button.render QMsg.Mdl
-            [ 2 ]
+            QM.newActivityCreateButtonIndex
             model.viewData.mdl
             [ Button.raised
             , Button.colored
@@ -187,7 +168,7 @@ renderQuadrantExpanded quadrantType activities viewData =
                 activities
             )
         , Button.render QMsg.Mdl
-            [ 5 ]
+            QM.collapseQuadrantIndex
             viewData.mdl
             [ Button.raised
             , Button.colored
@@ -202,7 +183,7 @@ renderActivity viewData activity =
     [ text activity.name
     , toString activity.timeSpent |> text
     , Button.render QMsg.Mdl
-        [ 6 ]
+        QM.deleteActivityIndex
         viewData.mdl
         [ Button.raised
         , Button.colored
@@ -216,10 +197,10 @@ quadrantRadio =
     radio "new-activity-group"
 
 
-radio : String -> QM.ViewData -> String -> Int -> QMsg.Msg -> Bool -> Html QMsg.Msg
+radio : String -> QM.ViewData -> String -> List Int -> QMsg.Msg -> Bool -> Html QMsg.Msg
 radio group viewData value index msg isChecked =
     Toggles.radio QMsg.Mdl
-        [ index ]
+        index
         viewData.mdl
         [ Toggles.value isChecked
         , Toggles.group group
@@ -246,7 +227,7 @@ renderReportGeneration model =
                 (List.append
                     (List.map renderReportResult report)
                     [ Button.render QMsg.Mdl
-                        [ 3 ]
+                        QM.collapseReportIndex
                         model.viewData.mdl
                         [ Button.raised
                         , Button.colored
@@ -258,7 +239,7 @@ renderReportGeneration model =
     else
         div []
             [ Button.render QMsg.Mdl
-                [ 4 ]
+                  QM.generateReportIndex
                 model.viewData.mdl
                 [ Button.raised
                 , Button.colored
