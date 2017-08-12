@@ -15,7 +15,7 @@ elm-install -t
 # Todo :
 ~Done: 1) dropdown : bug click outside should go away.~
 ~Done: 2) create activity some prompt. ~ elevation on hover.
-3) help text and over divs
+~Done: 3) help text and over divs. ~ not doing over divs
 ~Done: 4) clicakable box card.
 ~Done: 5) mins Per day in card box.
 6) User using it to track : future or current.
@@ -25,5 +25,5 @@ elm-install -t
 ~Done: 2) badges for activities.
 ~Done: 2) tickmark for imporant and urgent.
 ~Done: 2) replace dropdown with checkbox.
-3) help information button.
+~Done: 3) help information button.
 ~Done: 4) clickable box. should change mouse pointer.

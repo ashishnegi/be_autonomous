@@ -56,18 +56,29 @@ view model =
 
 renderHelpText : QuadrantModel -> Html QMsg.Msg
 renderHelpText model =
-    div []
-        [ Button.render QMsg.Mdl
-            [ 0 ]
-            model.viewData.mdl
-            [ Button.fab
-            , Button.colored
-            , Options.onClick QMsg.ShowHelpMsg
+    Grid.grid []
+        [ Grid.cell [ Grid.size Grid.All 1 ]
+            [ Button.render QMsg.Mdl
+                [ 0 ]
+                model.viewData.mdl
+                [ Button.fab
+                , Button.colored
+                , Options.onClick QMsg.ShowHelpMsg
+                ]
+                [ Icon.i "help_outline" ]
             ]
-            [ Icon.i "help_outline" ]
-        , if model.viewData.showHelpMsg then
-            Markdown.toHtml []
-                """
+        , Grid.cell [ Grid.size Grid.All 11 ]
+            [ Options.styled p
+                [ Typo.headline
+
+                -- , Typo.center
+                ]
+                [ text "Quadrant view of Life" ]
+            ]
+        , Grid.cell [ Grid.size Grid.All 12 ]
+            [ if model.viewData.showHelpMsg then
+                Markdown.toHtml []
+                    """
 > Urgent task is something that needs to be done now.
 > Important task is one that will benefit us in long run.
 
@@ -88,8 +99,9 @@ c. Urgent but not Important :
 d. Not Urgent and not Important :
    - Going through social media feeds.
               """
-          else
-            div [] []
+              else
+                div [] []
+            ]
         ]
 
 
