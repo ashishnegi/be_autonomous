@@ -1,9 +1,9 @@
 module Quadrant.Update exposing (update)
 
-import Quadrant.Message exposing (..)
-import Quadrant.Model exposing (..)
 import Dropdown
 import Material
+import Quadrant.Message exposing (..)
+import Quadrant.Model exposing (..)
 
 
 update : Msg -> QuadrantModel -> ( QuadrantModel, Cmd Msg )
@@ -39,6 +39,9 @@ update msg model =
 
             TimeRangeMsg timeRange ->
                 { model | viewData = { viewData | newActivityTimeRange = timeRange } } ! []
+
+            Raise raised ->
+                { model | viewData = { viewData | raised = raised } } ! []
 
             Mdl msg_ ->
                 let

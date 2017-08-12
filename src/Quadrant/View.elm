@@ -1,25 +1,26 @@
 module Quadrant.View exposing (view)
 
-import Quadrant.Model as QM exposing (QuadrantModel, Activity)
-import Quadrant.Message as QMsg exposing (Msg)
 import Html exposing (Html, div, text, button, input, fieldset, label, p)
-import Html.Events exposing (onClick, onInput)
 import Html.Attributes exposing (placeholder, name, style, type_, disabled, checked, value)
-import String
+import Html.CssHelpers
+import Html.Events exposing (onClick, onInput)
 import Material
 import Material.Button as Button
-import Material.Textfield as TextField
-import Material.Icon as Icon
-import Material.Options as Options
-import Material.Select as Select
-import Material.Dropdown.Item as Item
-import Material.Toggles as Toggles
-import Material.List as MList
-import Html.CssHelpers
-import Material.Grid as Grid
 import Material.Card as Card
 import Material.Color as Color
+import Material.Dropdown.Item as Item
+import Material.Elevation as Elevation
+import Material.Grid as Grid
+import Material.Icon as Icon
+import Material.List as MList
+import Material.Options as Options
+import Material.Select as Select
+import Material.Textfield as TextField
+import Material.Toggles as Toggles
 import Material.Typography as Typo
+import Quadrant.Message as QMsg exposing (Msg)
+import Quadrant.Model as QM exposing (QuadrantModel, Activity)
+import String
 
 
 white : Options.Property c m
@@ -102,9 +103,11 @@ renderQuadrantCollapse quadrantType activities viewData =
     in
         Grid.cell [ Grid.size Grid.All 6 ]
             [ Card.view
-                [ -- Options.css "width" "400px"
-                  Color.background (Color.color Color.LightBlue Color.S400)
-                , Options.onClick (QMsg.ExpandQuadrant quadrantType)
+                [ dynamic
+                    (QM.raiseQuadrantCardIndex quadrantType)
+                    (QMsg.ExpandQuadrant quadrantType)
+                    viewData
+                , Color.background (Color.color Color.LightBlue Color.S400)
                 ]
                 [ Card.title [] [ Card.head [ white ] [ text <| toString quadrantType ] ]
                 , Card.text [ white ]
@@ -307,3 +310,17 @@ renderReportResult result =
         [ text (toString result.quadrant)
         , text (toString result.ratio)
         ]
+
+
+dynamic : Int -> QMsg.Msg -> QM.ViewData -> Options.Style Msg
+dynamic k showcode viewData =
+    [ if viewData.raised == k then
+        Elevation.e8
+      else
+        Elevation.e2
+    , Elevation.transition 250
+    , Options.onMouseEnter (QMsg.Raise k)
+    , Options.onMouseLeave (QMsg.Raise -1)
+    , Options.onClick showcode
+    ]
+        |> Options.many

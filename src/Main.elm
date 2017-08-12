@@ -46,6 +46,7 @@ init =
                     collapseView
                     collapseView
                     QM.CreateActivityMode
+                    -1
                     Material.model
                 )
                 (initialSeed 0)

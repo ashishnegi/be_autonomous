@@ -14,14 +14,14 @@ elm-install -t
 
 # Todo :
 ~Done: 1) dropdown : bug click outside should go away.~
-2) create activity some prompt.
+~Done: 2) create activity some prompt. ~ elevation on hover.
 3) help text and over divs
 4) clicakable box card.
 5) mins Per day in card box.
 6) User using it to track : future or current.
 
 # Implementation:
-1) tell elm-mdl
+~Done: 1) tell elm-mdl ... Not required.
 2) badges for activities.
 2) tickmark for imporant and urgent.
 2) replace dropdown with checkbox.

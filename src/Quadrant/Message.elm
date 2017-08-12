@@ -1,7 +1,7 @@
 module Quadrant.Message exposing (..)
 
-import Quadrant.Model exposing (..)
 import Material
+import Quadrant.Model exposing (..)
 
 
 type Msg
@@ -14,4 +14,5 @@ type Msg
     | ToCreateActivityMode
     | DeleteActivity Id
     | TimeRangeMsg TimeRange
+    | Raise Int
     | Mdl (Material.Msg Msg)

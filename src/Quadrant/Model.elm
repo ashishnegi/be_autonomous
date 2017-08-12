@@ -1,9 +1,9 @@
 module Quadrant.Model exposing (..)
 
-import Uuid
-import Random.Pcg exposing (Seed, step)
 import Dropdown
 import Material
+import Random.Pcg exposing (Seed, step)
+import Uuid
 
 
 {-
@@ -254,6 +254,7 @@ type alias ViewData =
     , q3Quadrant : QuadrantView
     , q4Quadrant : QuadrantView
     , viewMode : ViewMode
+    , raised : Int
     , mdl : Material.Model
     }
 
@@ -352,3 +353,11 @@ timeRangeDropDownIndex =
 
 quadrantSelectIndex =
     [ 13 ]
+
+raiseQuadrantCardIndex : QuadrantType -> Int
+raiseQuadrantCardIndex quadrantType =
+    case quadrantType of
+        UrgentNotImportant -> 0
+        ImportantNotUrgent -> 1
+        UrgentAndImportant -> 2
+        NotUrgentNotImportant -> 3
