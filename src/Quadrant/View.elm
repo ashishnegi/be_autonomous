@@ -21,6 +21,7 @@ import Material.Card as Card
 import Material.Color as Color
 import Material.Typography as Typo
 
+
 white : Options.Property c m
 white =
     Color.text Color.white
@@ -185,14 +186,15 @@ renderNewActivityInput model =
 
 renderQuadrantExpanded : QM.QuadrantType -> List Activity -> QM.ViewData -> Grid.Cell Msg
 renderQuadrantExpanded quadrantType activities viewData =
-    Grid.cell [ Grid.size Grid.All 6
-              , Grid.size Grid.Phone 12
-              ]
+    Grid.cell
+        [ Grid.size Grid.All 6
+        , Grid.size Grid.Phone 12
+        ]
         [ Options.styled p
-            [ Typo.title ]
+            [ Typo.headline ]
             [ quadrantType |> QM.quadrantToName |> text ]
         , MList.ul []
-            (List.map (\x -> MList.li [] [ MList.content [] (renderActivity viewData x) ])
+            (List.map (\x -> MList.li [] [ MList.content [] [ renderActivity viewData x ] ])
                 activities
             )
         , Button.render QMsg.Mdl
@@ -206,19 +208,35 @@ renderQuadrantExpanded quadrantType activities viewData =
         ]
 
 
-renderActivity : QM.ViewData -> Activity -> List (Html Msg)
+renderActivity : QM.ViewData -> Activity -> Html Msg
 renderActivity viewData activity =
-    [ text activity.name
-    , toString activity.timeSpent |> text
-    , Button.render QMsg.Mdl
-        QM.deleteActivityIndex
-        viewData.mdl
-        [ Button.raised
-        , Button.colored
-        , Options.onClick (QMsg.DeleteActivity activity.id)
+    Grid.grid
+        []
+        [ Grid.cell
+            [ Grid.size Grid.All 8
+            , Grid.size Grid.Phone 12
+            ]
+            [ Options.styled p
+                [ Typo.title ]
+                [ text activity.name ]
+            ]
+        , Grid.cell
+            [ Grid.size Grid.All 4
+            , Grid.size Grid.Phone 12
+            ]
+            [ Options.styled p
+                [ Typo.subhead ]
+                [ activity.timeSpent |> floor |> toString |> stringPrepend " mins/day " |> text ]
+            , Button.render QMsg.Mdl
+                QM.deleteActivityIndex
+                viewData.mdl
+                [ Button.raised
+                , Button.colored
+                , Options.onClick (QMsg.DeleteActivity activity.id)
+                ]
+                [ text "Delete" ]
+            ]
         ]
-        [ text "Delete" ]
-    ]
 
 
 quadrantRadio =
