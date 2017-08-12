@@ -34,12 +34,15 @@ view : QuadrantModel -> Html Msg
 view model =
     Grid.grid
         []
-        [ Grid.cell [ Grid.size Grid.All 4 ]
+        [ Grid.cell [ Grid.size Grid.All 12 ]
             [ renderNewActivityInput model ]
         , Grid.cell [ Grid.size Grid.All 12 ]
             [ renderQuadrants model ]
-        , Grid.cell [ Grid.size Grid.All 4 ]
+        , Grid.cell [ Grid.size Grid.All 12 ]
             [ renderReportGeneration model ]
+
+        -- , Grid.cell [ Grid.size Grid.All 12 ]
+        --    [ (rawView model) ]
         ]
 
 
@@ -63,8 +66,6 @@ renderQuadrants model =
             , renderQuadrant QM.ImportantNotUrgent model q2Activities
             , renderQuadrant QM.UrgentNotImportant model q3Activities
             , renderQuadrant QM.NotUrgentNotImportant model q4Activities
-            , Grid.cell [ Grid.size Grid.All 12 ]
-                [ (rawView model) ]
             ]
 
 
@@ -100,8 +101,8 @@ renderQuadrantCollapse quadrantType activities viewData =
     in
         Grid.cell [ Grid.size Grid.All 6 ]
             [ Card.view
-                [ Options.css "width" "400px"
-                , Color.background (Color.color Color.LightBlue Color.S400)
+                [ -- Options.css "width" "400px"
+                  Color.background (Color.color Color.LightBlue Color.S400)
                 , Options.onClick (QMsg.ExpandQuadrant quadrantType)
                 ]
                 [ Card.title [] [ Card.head [ white ] [ text <| toString quadrantType ] ]
@@ -122,7 +123,7 @@ renderNewActivityInput model =
             QM.newActivityTextInputIndex
             model.viewData.mdl
             [ Options.onInput QMsg.NewActivityText
-            , TextField.label "New task/goal" -- Todo : this keeps showing up even in the case of input in text.
+            , TextField.label "New task/goal"
             , TextField.value model.viewData.newActivityName
             ]
             []
