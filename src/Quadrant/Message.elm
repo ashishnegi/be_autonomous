@@ -16,4 +16,5 @@ type Msg
     | DeleteActivity Id
     | TimeRangeMsg TimeRange
     | Raise Int
+    | ShowHelpMsg
     | Mdl (Material.Msg Msg)

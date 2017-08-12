@@ -38,7 +38,7 @@ init =
                 ]
                 (QM.ViewData ""
                     True
-                    False
+                    True
                     30
                     (Dropdown.newState "new-activity-dropdown")
                     QM.Day
@@ -48,6 +48,7 @@ init =
                     collapseView
                     QM.CreateActivityMode
                     -1
+                    False
                     Material.model
                 )
                 (initialSeed 0)

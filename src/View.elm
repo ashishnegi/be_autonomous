@@ -1,15 +1,15 @@
 module View exposing (view)
 
-import Model exposing (Model)
-import Message as Msg
-import Quadrant.View as QV
 import Html exposing (Html, program, text)
-import Material.Scheme
 import Material.Color as Color
+import Material.Footer as Footer
 import Material.Grid as Grid
 import Material.Layout as Layout
-import Material.Footer as Footer
 import Material.Options as Options
+import Material.Scheme
+import Message as Msg
+import Model exposing (Model)
+import Quadrant.View as QV
 
 
 view : Model -> Html Msg.Msg

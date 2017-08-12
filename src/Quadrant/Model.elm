@@ -275,6 +275,7 @@ type alias ViewData =
     , q4Quadrant : QuadrantView
     , viewMode : ViewMode
     , raised : Int
+    , showHelpMsg : Bool
     , mdl : Material.Model
     }
 

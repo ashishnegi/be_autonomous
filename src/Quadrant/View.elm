@@ -4,6 +4,7 @@ import Html exposing (Html, div, text, button, input, fieldset, label, p)
 import Html.Attributes exposing (placeholder, name, style, type_, disabled, checked, value)
 import Html.CssHelpers
 import Html.Events exposing (onClick, onInput)
+import Markdown
 import Material
 import Material.Badge as Badge
 import Material.Button as Button
@@ -39,6 +40,9 @@ view model =
     Grid.grid
         []
         [ Grid.cell [ Grid.size Grid.All 12 ]
+            [ renderHelpText model ]
+        , Grid.cell
+            [ Grid.size Grid.All 12 ]
             [ renderNewActivityInput model ]
         , Grid.cell [ Grid.size Grid.All 12 ]
             [ renderQuadrants model ]
@@ -47,6 +51,45 @@ view model =
 
         -- , Grid.cell [ Grid.size Grid.All 12 ]
         --    [ (rawView model) ]
+        ]
+
+
+renderHelpText : QuadrantModel -> Html QMsg.Msg
+renderHelpText model =
+    div []
+        [ Button.render QMsg.Mdl
+            [ 0 ]
+            model.viewData.mdl
+            [ Button.fab
+            , Button.colored
+            , Options.onClick QMsg.ShowHelpMsg
+            ]
+            [ Icon.i "help_outline" ]
+        , if model.viewData.showHelpMsg then
+            Markdown.toHtml []
+                """
+> Urgent task is something that needs to be done now.
+> Important task is one that will benefit us in long run.
+
+Examples :
+
+a. Urgent and Important :
+   - Crisis and Pressing problems.
+   - Medical situation.
+
+b. Important but not Urgent :
+   - Reading book relevent to your field.
+   - Planning next family outing.
+
+c. Urgent but not Important :
+   - Some meeting.
+   - Some email.
+
+d. Not Urgent and not Important :
+   - Going through social media feeds.
+              """
+          else
+            div [] []
         ]
 
 

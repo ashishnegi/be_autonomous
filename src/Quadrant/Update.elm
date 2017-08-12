@@ -46,6 +46,9 @@ update msg model =
             NewActivityUrgent ->
                 { model | viewData = { viewData | newActivityUrgent = not viewData.newActivityUrgent } } ! []
 
+            ShowHelpMsg ->
+                { model | viewData = { viewData | showHelpMsg = not viewData.showHelpMsg } } ! []
+
             Mdl msg_ ->
                 let
                     ( viewData_, cmds ) =
