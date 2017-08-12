@@ -1,1 +1,1 @@
-elm-css CssGen.elm
+elm-css src/CssGen.elm
