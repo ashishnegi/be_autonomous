@@ -1,0 +1,3 @@
+[submodule "external/elm-mdl"]
+	path = external/elm-mdl
+	url = https://github.com/debois/elm-mdl.git
