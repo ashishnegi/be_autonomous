@@ -5,6 +5,7 @@ import Quadrant.Model exposing (..)
 import Dropdown
 import Material
 
+
 update : Msg -> QuadrantModel -> ( QuadrantModel, Cmd Msg )
 update msg model =
     let
@@ -36,20 +37,15 @@ update msg model =
             DeleteActivity activityId ->
                 ( { model | activities = List.filter (\x -> x.id /= activityId) model.activities }, Cmd.none )
 
-
-            TimeRangeMsg msg ->
-                let
-                    ( updated, cmd ) =
-                        Dropdown.update dropDownConfig msg model.viewData.newActivityTimeRangeState
-                in
-                    ( { model | viewData = { viewData | newActivityTimeRangeState = updated } }, cmd )
-
-            TimeRangeSelect timeRangeVal ->
-                ( { model | viewData = { viewData | newActivityTimeRange = Maybe.withDefault Day timeRangeVal } }, Cmd.none )
+            TimeRangeMsg timeRange ->
+                { model | viewData = { viewData | newActivityTimeRange = timeRange } } ! []
 
             Mdl msg_ ->
-                let (viewData_, cmds) = Material.update Mdl msg_ model.viewData
-                in ( { model | viewData = viewData_ }, cmds )
+                let
+                    ( viewData_, cmds ) =
+                        Material.update Mdl msg_ model.viewData
+                in
+                    ( { model | viewData = viewData_ }, cmds )
 
 
 toggleExpand : QuadrantType -> ViewData -> ViewData

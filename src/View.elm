@@ -7,6 +7,7 @@ import Html exposing (Html, program)
 import Material.Scheme
 import Material.Color as Color
 
+
 view : Model -> Html Msg.Msg
 view model =
     Material.Scheme.topWithScheme Color.Teal Color.LightGreen <|

@@ -323,3 +323,7 @@ q3RadioSelectIndex =
 
 q4RadioSelectIndex =
     [ 11 ]
+
+
+timeRangeDropDownIndex =
+    [ 12 ]

@@ -6,12 +6,13 @@ import Html exposing (Html, div, text, button, input, fieldset, label)
 import Html.Events exposing (onClick, onInput)
 import Html.Attributes exposing (placeholder, name, style, type_, disabled, checked, value)
 import String
-import Dropdown
 import Material
 import Material.Button as Button
 import Material.Textfield as TextField
 import Material.Icon as Icon
 import Material.Options as Options
+import Material.Select as Select
+import Material.Dropdown.Item as Item
 import Material.Toggles as Toggles
 import Material.List as MList
 import Html.CssHelpers
@@ -141,11 +142,24 @@ renderNewActivityInput model =
             ]
             []
         , text " minutes in "
-        , Html.map QMsg.TimeRangeMsg
-            (Dropdown.view QMsg.dropDownConfig
-                model.viewData.newActivityTimeRangeState
-                QM.timeRange
-                (Just model.viewData.newActivityTimeRange)
+        , Select.render QMsg.Mdl
+            QM.timeRangeDropDownIndex
+            model.viewData.mdl
+            [ Select.label "Time range"
+            , Select.below
+
+            -- , Select.floatingLabel
+            -- , Select.ripple
+            , Select.value (QM.timeRangeToName model.viewData.newActivityTimeRange)
+            ]
+            (QM.timeRange
+                |> List.map
+                    (\tr ->
+                        Select.item
+                            [ Item.onSelect (QMsg.TimeRangeMsg tr)
+                            ]
+                            [ tr |> QM.timeRangeToName |> text ]
+                    )
             )
         , Button.render QMsg.Mdl
             QM.newActivityCreateButtonIndex
@@ -239,7 +253,7 @@ renderReportGeneration model =
     else
         div []
             [ Button.render QMsg.Mdl
-                  QM.generateReportIndex
+                QM.generateReportIndex
                 model.viewData.mdl
                 [ Button.raised
                 , Button.colored
