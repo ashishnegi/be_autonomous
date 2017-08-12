@@ -24,6 +24,6 @@ elm-install -t
 ~Done: 1) tell elm-mdl ... Not required.
 ~Done: 2) badges for activities.
 ~Done: 2) tickmark for imporant and urgent.
-2) replace dropdown with checkbox.
+~Done: 2) replace dropdown with checkbox.
 3) help information button.
 ~Done: 4) clickable box. should change mouse pointer.

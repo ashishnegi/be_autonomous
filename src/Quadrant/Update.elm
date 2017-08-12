@@ -16,9 +16,6 @@ update msg model =
             NewActivityText name ->
                 ( { model | viewData = { viewData | newActivityName = name } }, Cmd.none )
 
-            NewActivityQuadrant quadrant ->
-                ( { model | viewData = { viewData | newActivityQuadrant = quadrant } }, Cmd.none )
-
             NewActivityTimeSpan timeSpan ->
                 ( { model | viewData = { viewData | newActivityTimeSpan = convertToFloat timeSpan } }, Cmd.none )
 
@@ -43,10 +40,16 @@ update msg model =
             Raise raised ->
                 { model | viewData = { viewData | raised = raised } } ! []
 
+            NewActivityImportant ->
+                { model | viewData = { viewData | newActivityImportant = not viewData.newActivityImportant } } ! []
+
+            NewActivityUrgent ->
+                { model | viewData = { viewData | newActivityUrgent = not viewData.newActivityUrgent } } ! []
+
             Mdl msg_ ->
                 let
                     ( viewData_, cmds ) =
-                        Material.update Mdl msg_ model.viewData
+                        Material.update Mdl msg_ viewData
                 in
                     ( { model | viewData = viewData_ }, cmds )
 

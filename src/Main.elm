@@ -37,7 +37,8 @@ init =
                 , { id = stringToUuid "48cce67d-a40b-4112-be49-a49cb9897201", name = "so whats up..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
                 ]
                 (QM.ViewData ""
-                    QM.UrgentAndImportant
+                    True
+                    False
                     30
                     (Dropdown.newState "new-activity-dropdown")
                     QM.Day

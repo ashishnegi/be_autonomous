@@ -13,6 +13,7 @@ import Material.Dropdown.Item as Item
 import Material.Elevation as Elevation
 import Material.Grid as Grid
 import Material.Icon as Icon
+import Material.Layout as Layout
 import Material.List as MList
 import Material.Options as Options
 import Material.Select as Select
@@ -147,7 +148,10 @@ renderQuadrantCollapse quadrantType activities viewData =
 renderNewActivityInput : QuadrantModel -> Html Msg
 renderNewActivityInput model =
     Grid.grid []
-        [ Grid.cell [ Grid.size Grid.All 12 ]
+        [ Grid.cell
+            [ Grid.size Grid.All 4
+            , Grid.size Grid.Desktop 3
+            ]
             [ TextField.render
                 QMsg.Mdl
                 QM.newActivityTextInputIndex
@@ -157,23 +161,39 @@ renderNewActivityInput model =
                 , TextField.value model.viewData.newActivityName
                 ]
                 []
-            , Select.render QMsg.Mdl
-                QM.quadrantSelectIndex
+            ]
+        , Grid.cell
+            [ Grid.size Grid.All 3
+            , Grid.size Grid.Desktop 2
+            , Options.css "display" "flex"
+            , Options.css "flex-direction" "row"
+            ]
+            [ Toggles.checkbox QMsg.Mdl
+                QM.urgentCheckboxIndex
                 model.viewData.mdl
-                [ Select.label "Quadrant of activity"
-                , Select.below
-                , Select.floatingLabel
-                , Select.ripple
-                , Select.value (QM.quadrantToName model.viewData.newActivityQuadrant)
+                [ Options.onToggle QMsg.NewActivityUrgent
+                , Toggles.ripple
+                , Toggles.value model.viewData.newActivityUrgent
+                , Toggles.group "new-activity-quadrant"
+                , Options.css "display" "inline-block"
                 ]
-                (QM.quadrantTypes
-                    |> List.map
-                        (\qt ->
-                            Select.item [ Item.onSelect (QMsg.NewActivityQuadrant qt) ]
-                                [ qt |> QM.quadrantToName |> text ]
-                        )
-                )
-            , TextField.render
+                [ text "Urgent" ]
+            , Toggles.checkbox QMsg.Mdl
+                QM.importantCheckboxIndex
+                model.viewData.mdl
+                [ Options.onToggle QMsg.NewActivityImportant
+                , Toggles.ripple
+                , Toggles.value model.viewData.newActivityImportant
+                , Toggles.group "new-activity-quadrant"
+                , Options.css "display" "inline-block"
+                ]
+                [ text "Important" ]
+            ]
+        , Grid.cell
+            [ Grid.size Grid.All 3
+            , Grid.size Grid.Desktop 3
+            ]
+            [ TextField.render
                 QMsg.Mdl
                 QM.newActivityMinsIndex
                 model.viewData.mdl
@@ -183,7 +203,9 @@ renderNewActivityInput model =
                 , TextField.value (toString model.viewData.newActivityTimeSpan)
                 ]
                 []
-            , text " minutes in "
+            , Options.span
+                [ Typo.subhead ]
+                [ text " mins in " ]
             , Select.render QMsg.Mdl
                 QM.timeRangeDropDownIndex
                 model.viewData.mdl
@@ -203,7 +225,9 @@ renderNewActivityInput model =
                                 [ tr |> QM.timeRangeToName |> text ]
                         )
                 )
-            , Button.render QMsg.Mdl
+            ]
+        , Grid.cell [ Grid.size Grid.All 2 ]
+            [ Button.render QMsg.Mdl
                 QM.newActivityCreateButtonIndex
                 model.viewData.mdl
                 [ Button.raised
@@ -221,7 +245,7 @@ renderQuadrantExpanded quadrantType activities viewData =
         [ Grid.size Grid.All 6
         , Grid.size Grid.Phone 12
         ]
-        [ Options.styled p
+        [ Options.span
             [ Typo.headline ]
             [ quadrantType |> QM.quadrantToName |> text ]
         , MList.ul []
@@ -248,14 +272,15 @@ renderActivity viewData activity =
             , Grid.size Grid.Phone 12
             ]
             [ Options.styled p
-                [ Typo.title ]
+                [ Typo.title
+                ]
                 [ text activity.name ]
             ]
         , Grid.cell
             [ Grid.size Grid.All 4
             , Grid.size Grid.Phone 12
             ]
-            [ Options.styled p
+            [ Options.span
                 [ Typo.subhead ]
                 [ activity.timeSpent |> floor |> toString |> stringPrepend " mins/day " |> text ]
             , Button.render QMsg.Mdl

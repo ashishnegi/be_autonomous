@@ -198,7 +198,7 @@ commitNewActivity model =
         { activities, viewData, currentSeed } =
             model
 
-        { newActivityName, newActivityQuadrant, newActivityTimeSpan, newActivityTimeRange } =
+        { newActivityName, newActivityImportant, newActivityUrgent, newActivityTimeSpan, newActivityTimeRange } =
             viewData
 
         ( newUuid, newSeed ) =
@@ -206,11 +206,30 @@ commitNewActivity model =
 
         time =
             timePerDay newActivityTimeSpan newActivityTimeRange
+
+        newActivityQuadrant =
+            quadrantTypeFrom newActivityUrgent newActivityImportant
     in
         { model
             | activities = Activity newUuid newActivityName newActivityQuadrant time :: activities
             , currentSeed = newSeed
         }
+
+
+quadrantTypeFrom : Bool -> Bool -> QuadrantType
+quadrantTypeFrom urgent important =
+    case ( urgent, important ) of
+        ( True, False ) ->
+            UrgentNotImportant
+
+        ( False, True ) ->
+            ImportantNotUrgent
+
+        ( True, True ) ->
+            UrgentAndImportant
+
+        ( False, False ) ->
+            NotUrgentNotImportant
 
 
 timePerDay : TimeSpan -> TimeRange -> TimeSpan
@@ -245,7 +264,8 @@ type ViewMode
 
 type alias ViewData =
     { newActivityName : Name
-    , newActivityQuadrant : QuadrantType
+    , newActivityImportant : Bool
+    , newActivityUrgent : Bool
     , newActivityTimeSpan : TimeSpan
     , newActivityTimeRangeState : Dropdown.State
     , newActivityTimeRange : TimeRange
@@ -353,6 +373,14 @@ timeRangeDropDownIndex =
 
 quadrantSelectIndex =
     [ 13 ]
+
+
+urgentCheckboxIndex =
+    [ 14 ]
+
+
+importantCheckboxIndex =
+    [ 15 ]
 
 
 raiseQuadrantCardIndex : QuadrantType -> Int

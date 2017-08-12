@@ -6,7 +6,8 @@ import Quadrant.Model exposing (..)
 
 type Msg
     = NewActivityText Name
-    | NewActivityQuadrant QuadrantType
+    | NewActivityImportant
+    | NewActivityUrgent
     | NewActivityTimeSpan String
     | NewActivity
     | ExpandQuadrant QuadrantType
