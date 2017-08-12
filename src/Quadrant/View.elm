@@ -127,12 +127,27 @@ renderNewActivityInput model =
             , TextField.value model.viewData.newActivityName
             ]
             []
-        , fieldset []
-            [ quadrantRadio model.viewData "Urgent and Important" QM.q1RadioSelectIndex (QMsg.NewActivityQuadrant QM.UrgentAndImportant) (model.viewData.newActivityQuadrant == QM.UrgentAndImportant)
-            , quadrantRadio model.viewData "Not Urgent but Important" QM.q2RadioSelectIndex (QMsg.NewActivityQuadrant QM.ImportantNotUrgent) (model.viewData.newActivityQuadrant == QM.ImportantNotUrgent)
-            , quadrantRadio model.viewData "Urgent but not Important" QM.q3RadioSelectIndex (QMsg.NewActivityQuadrant QM.UrgentNotImportant) (model.viewData.newActivityQuadrant == QM.UrgentNotImportant)
-            , quadrantRadio model.viewData "Not Urgent and not Important" QM.q4RadioSelectIndex (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant) (model.viewData.newActivityQuadrant == QM.NotUrgentNotImportant)
+        , Select.render QMsg.Mdl
+            QM.quadrantSelectIndex
+            model.viewData.mdl
+            [ Select.label "Quadrant of activity"
+            , Select.below
+            , Select.value (QM.quadrantToName model.viewData.newActivityQuadrant)
             ]
+            (QM.quadrantTypes
+                |> List.map
+                    (\qt ->
+                        Select.item [ Item.onSelect (QMsg.NewActivityQuadrant qt) ]
+                            [ qt |> QM.quadrantToName |> text ]
+                    )
+            )
+
+        -- , fieldset []
+        --     [ quadrantRadio model.viewData "Urgent and Important" QM.q1RadioSelectIndex (QMsg.NewActivityQuadrant QM.UrgentAndImportant) (model.viewData.newActivityQuadrant == QM.UrgentAndImportant)
+        --     , quadrantRadio model.viewData "Not Urgent but Important" QM.q2RadioSelectIndex (QMsg.NewActivityQuadrant QM.ImportantNotUrgent) (model.viewData.newActivityQuadrant == QM.ImportantNotUrgent)
+        --     , quadrantRadio model.viewData "Urgent but not Important" QM.q3RadioSelectIndex (QMsg.NewActivityQuadrant QM.UrgentNotImportant) (model.viewData.newActivityQuadrant == QM.UrgentNotImportant)
+        --     , quadrantRadio model.viewData "Not Urgent and not Important" QM.q4RadioSelectIndex (QMsg.NewActivityQuadrant QM.NotUrgentNotImportant) (model.viewData.newActivityQuadrant == QM.NotUrgentNotImportant)
+        --     ]
         , TextField.render
             QMsg.Mdl
             QM.newActivityMinsIndex

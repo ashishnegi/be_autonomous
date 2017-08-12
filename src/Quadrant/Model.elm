@@ -281,6 +281,27 @@ timeRangeToName =
     toString
 
 
+quadrantTypes : List QuadrantType
+quadrantTypes =
+    [ UrgentAndImportant, ImportantNotUrgent, UrgentNotImportant, NotUrgentNotImportant ]
+
+
+quadrantToName : QuadrantType -> String
+quadrantToName quadrant =
+    case quadrant of
+        UrgentAndImportant ->
+            "Urgent & Important"
+
+        ImportantNotUrgent ->
+            "Important but not Urgent"
+
+        UrgentNotImportant ->
+            "Urgent but not Important"
+
+        NotUrgentNotImportant ->
+            "Not Urgent & Not Important"
+
+
 newActivityTextInputIndex =
     [ 0 ]
 
@@ -327,3 +348,7 @@ q4RadioSelectIndex =
 
 timeRangeDropDownIndex =
     [ 12 ]
+
+
+quadrantSelectIndex =
+    [ 13 ]
