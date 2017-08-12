@@ -354,10 +354,50 @@ timeRangeDropDownIndex =
 quadrantSelectIndex =
     [ 13 ]
 
+
 raiseQuadrantCardIndex : QuadrantType -> Int
 raiseQuadrantCardIndex quadrantType =
     case quadrantType of
-        UrgentNotImportant -> 0
-        ImportantNotUrgent -> 1
-        UrgentAndImportant -> 2
-        NotUrgentNotImportant -> 3
+        UrgentNotImportant ->
+            0
+
+        ImportantNotUrgent ->
+            1
+
+        UrgentAndImportant ->
+            2
+
+        NotUrgentNotImportant ->
+            3
+
+
+isUrgent : QuadrantType -> Bool
+isUrgent quadrantType =
+    case quadrantType of
+        UrgentNotImportant ->
+            True
+
+        ImportantNotUrgent ->
+            False
+
+        UrgentAndImportant ->
+            True
+
+        NotUrgentNotImportant ->
+            False
+
+
+isImportant : QuadrantType -> Bool
+isImportant quadrantType =
+    case quadrantType of
+        UrgentNotImportant ->
+            False
+
+        ImportantNotUrgent ->
+            True
+
+        UrgentAndImportant ->
+            True
+
+        NotUrgentNotImportant ->
+            False

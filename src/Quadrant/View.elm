@@ -100,7 +100,19 @@ renderQuadrantCollapse quadrantType activities viewData =
             QM.totalTime activities
                 |> toString
                 |> String.append " in "
-                |> stringPrepend " mins"
+                |> stringPrepend " mins / day"
+
+        urgentIcon =
+            if QM.isUrgent quadrantType then
+                "check"
+            else
+                "close"
+
+        importantIcon =
+            if QM.isImportant quadrantType then
+                "check"
+            else
+                "close"
     in
         Grid.cell [ Grid.size Grid.All 6 ]
             [ Card.view
@@ -111,7 +123,14 @@ renderQuadrantCollapse quadrantType activities viewData =
                 , Color.background (Color.color Color.LightBlue Color.S400)
                 ]
                 [ Card.title []
-                    [ Card.head [ white ] [ text <| QM.quadrantToName quadrantType ]
+                    [ Card.head [ white ]
+                        [ Icon.view urgentIcon [ Options.css "width" "40px" ]
+                        , text <| "Urgent"
+                        ]
+                    , Card.head [ white ]
+                        [ Icon.view importantIcon [ Options.css "width" "40px" ]
+                        , text <| "Important"
+                        ]
                     ]
                 , Card.text [ white ]
                     [ Card.subhead [ white ]
@@ -307,7 +326,7 @@ renderReportGeneration model =
                     Options.onClick QMsg.GenerateReport
                   )
                 ]
-                [ text "GenerateReport" ]
+                [ text "Generate Report" ]
             ]
 
 
