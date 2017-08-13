@@ -18,6 +18,7 @@ import Material.Layout as Layout
 import Material.List as MList
 import Material.Options as Options
 import Material.Select as Select
+import Material.Snackbar as Snackbar
 import Material.Textfield as TextField
 import Material.Toggles as Toggles
 import Material.Tooltip as Tooltip
@@ -60,10 +61,11 @@ renderHelpText model =
     Grid.grid []
         [ Grid.cell [ Grid.size Grid.All 1 ]
             [ Button.render QMsg.Mdl
-                [ 0 ]
+                QM.helpTextIndex
                 model.viewData.mdl
                 [ Button.fab
                 , Button.colored
+                , Button.ripple
                 , Options.onClick QMsg.ShowHelpMsg
                 ]
                 [ Icon.i "help_outline" ]
@@ -288,9 +290,11 @@ renderNewActivityInput model =
                 model.viewData.mdl
                 [ Button.raised
                 , Button.colored
+                , Button.ripple
                 , Options.onClick QMsg.NewActivity
                 ]
-                [ text "Create Activity" ]
+                [ text "Create Activity"
+                ]
             ]
         ]
 
@@ -305,53 +309,59 @@ renderQuadrantExpanded quadrantType activities viewData =
             [ Typo.headline ]
             [ quadrantType |> QM.quadrantToName |> text ]
         , MList.ul []
-            (List.map (renderActivity viewData) activities)
+            (List.indexedMap (renderActivity viewData) activities)
         , Button.render QMsg.Mdl
             QM.collapseQuadrantIndex
             viewData.mdl
             [ Button.raised
             , Button.colored
+            , Button.ripple
             , Options.onClick (QMsg.ExpandQuadrant quadrantType)
             ]
             [ text "Collapse" ]
         ]
 
 
-renderActivity : QM.ViewData -> Activity -> Html Msg
-renderActivity viewData activity =
-    MList.li [ MList.withSubtitle ]
-        [ MList.content []
-            [ -- Options.span
-              --   [ Typo.title
-              --   , Typo.nowrap
-              --   ]
-              --   [
-              -- Texts wrap and we can see the subtitle if we uncomment above..
-              -- but content2 goes out of view : delete button.
-              -- mobile : width : 150px, desktop 450px for fixing.
-              text activity.name
+renderActivity : QM.ViewData -> Int -> Activity -> Html Msg
+renderActivity viewData activityIndex activity =
+    let
+        iconIdex =
+            (QM.deleteForeverIndex ++ [ activityIndex ])
+    in
+        MList.li [ MList.withSubtitle ]
+            [ MList.content []
+                [ -- Options.span
+                  --   [ Typo.title
+                  --   , Typo.nowrap
+                  --   ]
+                  --   [
+                  -- Texts wrap and we can see the subtitle if we uncomment above..
+                  -- but content2 goes out of view : delete button.
+                  -- mobile : width : 150px, desktop 450px for fixing.
+                  text activity.name
 
-            -- ]
-            , MList.subtitle []
-                [ activity.timeSpent |> floor |> toString |> stringPrepend " mins/day " |> text ]
-            ]
-        , MList.content2 []
-            [ Button.render QMsg.Mdl
-                QM.deleteActivityIndex
-                viewData.mdl
-                [ Button.raised
-                , Button.colored
-                , Options.onClick (QMsg.DeleteActivity activity.id)
+                -- ]
+                , MList.subtitle []
+                    [ activity.timeSpent |> floor |> toString |> stringPrepend " mins/day " |> text ]
                 ]
-                [ Icon.view "delete_forever" [ Tooltip.attach QMsg.Mdl [ 0 ] ]
-                , Tooltip.render QMsg.Mdl
-                    [ 0 ]
+            , MList.content2 []
+                [ Button.render QMsg.Mdl
+                    (QM.deleteActivityIndex ++ [ activityIndex ])
                     viewData.mdl
-                    []
-                    [ text "Delete activity forever." ]
+                    [ Button.raised
+                    , Button.colored
+                    , Button.ripple
+                    , Options.onClick (QMsg.DeleteActivity activity.id)
+                    ]
+                    [ Icon.view "delete_forever" [ Tooltip.attach QMsg.Mdl iconIdex ]
+                    , Tooltip.render QMsg.Mdl
+                        iconIdex
+                        viewData.mdl
+                        []
+                        [ text "Delete activity forever." ]
+                    ]
                 ]
             ]
-        ]
 
 
 quadrantRadio =
@@ -392,6 +402,7 @@ renderReportGeneration model =
                         model.viewData.mdl
                         [ Button.raised
                         , Button.colored
+                        , Button.ripple
                         , Options.onClick QMsg.ToCreateActivityMode
                         ]
                         [ text "Collapse" ]
@@ -404,6 +415,7 @@ renderReportGeneration model =
                 model.viewData.mdl
                 [ Button.raised
                 , Button.colored
+                , Button.ripple
                 , (if not <| QM.canGenerateReport model then
                     Button.disabled
                    else

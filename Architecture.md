@@ -19,6 +19,8 @@ elm-install -t
 ~Done: 4) clicakable box card.
 ~Done: 5) mins Per day in card box.
 6) User using it to track : future or current.
+~Done *) Make lists nicer.
+7) Toast message on adding of activity.
 7) Report generation.
 8) Collapse button as part of "header" of Quadrant activity list.
 9) How and where to store the data.

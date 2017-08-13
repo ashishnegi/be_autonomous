@@ -382,6 +382,14 @@ importantCheckboxIndex =
     [ 15 ]
 
 
+helpTextIndex =
+    [ 16 ]
+
+
+deleteForeverIndex =
+    [ 17 ]
+
+
 raiseQuadrantCardIndex : QuadrantType -> Int
 raiseQuadrantCardIndex quadrantType =
     case quadrantType of
