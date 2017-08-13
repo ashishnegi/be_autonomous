@@ -72,10 +72,7 @@ renderHelpText model =
             ]
         , Grid.cell [ Grid.size Grid.All 11 ]
             [ Options.styled p
-                [ Typo.headline
-
-                -- , Typo.center
-                ]
+                [ Typo.headline ]
                 [ text "Quadrant view of Life" ]
             ]
         , Grid.cell [ Grid.size Grid.All 12 ]
@@ -297,7 +294,9 @@ renderNewActivityInput model =
                 , Options.css "margin-left" "2em"
                 ]
                 [ Options.span
-                    [ Badge.add <| toString <| model.viewData.numNewActivities ]
+                    [ Badge.add <| toString <| model.viewData.numNewActivities
+                    , Typo.capitalize
+                    ]
                     [ text "Create Activity" ]
                 ]
             ]
@@ -323,7 +322,9 @@ renderQuadrantExpanded quadrantType activities viewData =
             , Button.ripple
             , Options.onClick (QMsg.ExpandQuadrant quadrantType)
             ]
-            [ text "Collapse" ]
+            [ Options.span [ Typo.capitalize ]
+                [ text "Collapse" ]
+            ]
         ]
 
 
@@ -427,7 +428,9 @@ renderReportGeneration model =
                     Options.onClick QMsg.GenerateReport
                   )
                 ]
-                [ text "Generate Report" ]
+                [ Options.span [ Typo.capitalize ]
+                    [ text "Generate Report" ]
+                ]
             ]
 
 
