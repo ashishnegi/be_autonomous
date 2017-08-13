@@ -297,6 +297,8 @@ renderNewActivityInput model =
                 , Button.ripple
                 , Options.onClick QMsg.NewActivity
                 , Options.css "margin-left" "2em"
+                , Options.css "width" "14em"
+                , Options.css "font-size" "18px"
                 ]
                 [ Options.span
                     [ Badge.add <| toString <| model.viewData.numNewActivities
