@@ -23,9 +23,10 @@ elm-install -t
 ~Done 7) Toast message on adding of activity. ~ added badge new activity counter on button.
 7) Report generation.
 ~Not needed 8) Collapse button as part of "header" of Quadrant activity list.
-9) How and where to store the data.
+9) How and where to store the data. ~ localstorage / app
 10) Mobile app.
 11) Deploy on heroku.
+
 
 # Implementation:
 ~Done: 1) tell elm-mdl ... Not required.
@@ -34,3 +35,7 @@ elm-install -t
 ~Done: 2) replace dropdown with checkbox.
 ~Done: 3) help information button.
 ~Done: 4) clickable box. should change mouse pointer.
+
+
+# Tried:
+1) react-native : requires npm version < 5.

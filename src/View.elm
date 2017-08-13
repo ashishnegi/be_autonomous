@@ -12,6 +12,7 @@ import Material.Typography as Typo
 import Message as Msg
 import Model exposing (Model)
 import Quadrant.View as QV
+import Utils
 
 
 view : Model -> Html Msg.Msg
@@ -28,7 +29,7 @@ view model =
             , tabs = ( [], [] )
             , main =
                 [ Grid.grid []
-                    [ Grid.cell
+                    [ Utils.cell
                         [ Grid.size Grid.All 12 ]
                         [ quadrantView model ]
                     , Grid.cell [ Grid.size Grid.All 12 ]
@@ -40,7 +41,7 @@ view model =
 
 quadrantView : Model -> Html Msg.Msg
 quadrantView model =
-    Grid.grid
+    Utils.grid
         []
         [ Grid.cell
             [ Grid.size Grid.All 2
@@ -48,7 +49,7 @@ quadrantView model =
             ]
             -- Todo: remove in mobile
             []
-        , Grid.cell
+        , Utils.cell
             [ Grid.size Grid.All 8
             , Grid.size Grid.Phone 10
             ]

@@ -27,6 +27,7 @@ import Quadrant.Message as QMsg exposing (Msg)
 import Quadrant.Model as QM exposing (QuadrantModel, Activity)
 import Round
 import String
+import Utils
 
 
 white : Options.Property c m
@@ -40,14 +41,14 @@ white =
 
 view : QuadrantModel -> Html Msg
 view model =
-    Grid.grid
+    Utils.grid
         []
         [ Grid.cell [ Grid.size Grid.All 12 ]
             [ renderHelpText model ]
         , Grid.cell
             [ Grid.size Grid.All 12 ]
             [ renderNewActivityInput model ]
-        , Grid.cell [ Grid.size Grid.All 12 ]
+        , Utils.cell [ Grid.size Grid.All 12 ]
             [ renderQuadrants model ]
         , Grid.cell [ Grid.size Grid.All 12 ]
             [ renderReportGeneration model ]
@@ -59,7 +60,7 @@ view model =
 
 renderHelpText : QuadrantModel -> Html QMsg.Msg
 renderHelpText model =
-    Grid.grid []
+    Utils.grid []
         [ Grid.cell [ Grid.size Grid.All 1 ]
             [ Button.render QMsg.Mdl
                 QM.helpTextIndex
@@ -121,7 +122,10 @@ renderQuadrants model =
         q4Activities =
             List.filter QM.isQ4 model.activities
     in
-        Grid.grid []
+        Utils.grid
+            [ Options.css "margin-left" "4px"
+            , Options.css "margin-right" "4px"
+            ]
             [ renderQuadrant QM.UrgentAndImportant model q1Activities
             , renderQuadrant QM.ImportantNotUrgent model q2Activities
             , renderQuadrant QM.UrgentNotImportant model q3Activities
@@ -171,7 +175,7 @@ renderQuadrantCollapse quadrantType activities viewData =
             else
                 "close"
     in
-        Grid.cell [ Grid.size Grid.All 6 ]
+        Utils.cell [ Grid.size Grid.All 6 ]
             [ Card.view
                 [ dynamic
                     (QM.raiseQuadrantCardIndex quadrantType)
@@ -203,7 +207,7 @@ renderQuadrantCollapse quadrantType activities viewData =
 
 renderNewActivityInput : QuadrantModel -> Html Msg
 renderNewActivityInput model =
-    Grid.grid []
+    Utils.grid []
         [ Grid.cell
             [ Grid.size Grid.All 4
             , Grid.size Grid.Desktop 3
@@ -335,7 +339,10 @@ renderActivity viewData activityIndex activity =
         iconIdex =
             (QM.deleteForeverIndex ++ [ activityIndex ])
     in
-        MList.li [ MList.withSubtitle ]
+        MList.li
+            [ MList.withSubtitle
+            , Options.css "padding" "0px"
+            ]
             [ MList.content []
                 [ -- Options.span
                   --   [ Typo.title
@@ -401,7 +408,7 @@ renderReportGeneration model =
             report =
                 QM.quadrantRatioTimes model.activities
         in
-            Grid.grid []
+            Utils.grid []
                 [ Grid.cell
                     [ Grid.size Grid.All 12
                     , Grid.size Grid.Desktop 6
@@ -446,7 +453,7 @@ renderReportGeneration model =
 
 renderReportResult : QM.Result -> Html Msg
 renderReportResult result =
-    MList.li []
+    MList.li [ Options.css "padding" "0px" ]
         [ MList.content []
             [ text <| QM.quadrantToName result.quadrant ]
         , MList.content2 []
