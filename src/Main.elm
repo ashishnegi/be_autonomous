@@ -45,6 +45,7 @@ init =
                     True
                     30
                     QM.Day
+                    0
                     collapseView
                     collapseView
                     collapseView

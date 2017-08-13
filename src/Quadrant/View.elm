@@ -222,7 +222,7 @@ renderNewActivityInput model =
             ]
         , Grid.cell
             [ Grid.size Grid.All 3
-            , Grid.size Grid.Desktop 2
+            , Grid.size Grid.Desktop 3
             , Options.css "display" "flex"
             , Options.css "flex-direction" "row"
             ]
@@ -248,8 +248,8 @@ renderNewActivityInput model =
                 [ text "Important" ]
             ]
         , Grid.cell
-            [ Grid.size Grid.All 3
-            , Grid.size Grid.Desktop 3
+            [ Grid.size Grid.All 5
+            , Grid.size Grid.Desktop 6
             ]
             [ TextField.render
                 QMsg.Mdl
@@ -283,17 +283,22 @@ renderNewActivityInput model =
                                 [ tr |> QM.timeRangeToName |> text ]
                         )
                 )
-            ]
-        , Grid.cell [ Grid.size Grid.All 2 ]
-            [ Button.render QMsg.Mdl
+
+            -- ]
+            -- , Grid.cell [ Grid.size Grid.All 3 ]
+            -- [
+            , Button.render QMsg.Mdl
                 QM.newActivityCreateButtonIndex
                 model.viewData.mdl
                 [ Button.raised
                 , Button.colored
                 , Button.ripple
                 , Options.onClick QMsg.NewActivity
+                , Options.css "margin-left" "2em"
                 ]
-                [ text "Create Activity"
+                [ Options.span
+                    [ Badge.add <| toString <| model.viewData.numNewActivities ]
+                    [ text "Create Activity" ]
                 ]
             ]
         ]

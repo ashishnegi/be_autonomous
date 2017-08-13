@@ -211,6 +211,7 @@ commitNewActivity model =
     in
         { model
             | activities = Activity newUuid newActivityName newActivityQuadrant time :: activities
+            , viewData = { viewData | numNewActivities = viewData.numNewActivities + 1 }
             , currentSeed = newSeed
         }
 
@@ -267,6 +268,7 @@ type alias ViewData =
     , newActivityUrgent : Bool
     , newActivityTimeSpan : TimeSpan
     , newActivityTimeRange : TimeRange
+    , numNewActivities : Int
     , q1Quadrant : QuadrantView
     , q2Quadrant : QuadrantView
     , q3Quadrant : QuadrantView
