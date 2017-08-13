@@ -1,5 +1,7 @@
 module Quadrant.Model exposing (..)
 
+import Json.Decode as JD exposing (field)
+import Json.Encode as JE
 import Material
 import Random.Pcg exposing (Seed, step)
 import Uuid
@@ -53,6 +55,14 @@ getQuadrantType urgency importance =
             NotUrgentNotImportant
 
 
+type alias Activity =
+    { id : Id
+    , name : Name
+    , quadrant : QuadrantType
+    , timeSpent : TimeSpan
+    }
+
+
 {-| TimeSpan : number of minute
 -}
 type alias TimeSpan =
@@ -65,14 +75,6 @@ type alias Id =
 
 type alias Name =
     String
-
-
-type alias Activity =
-    { id : Id
-    , name : Name
-    , quadrant : QuadrantType
-    , timeSpent : TimeSpan
-    }
 
 
 type alias Result =
@@ -287,6 +289,21 @@ type alias QuadrantModel =
     }
 
 
+encodeModel : QuadrantModel -> JE.Value
+encodeModel model =
+    JE.object [ ( "activities", JE.list (List.map encodeActivity model.activities) ) ]
+
+
+encodeActivity : Activity -> JE.Value
+encodeActivity activity =
+    JE.object
+        [ ( "id", JE.string <| Uuid.toString activity.id )
+        , ( "name", JE.string activity.name )
+        , ( "quadrant", encodeQuadrantType activity.quadrant )
+        , ( "timeSpent", JE.float activity.timeSpent )
+        ]
+
+
 type TimeRange
     = Day
     | Week
@@ -438,3 +455,60 @@ isImportant quadrantType =
 
         NotUrgentNotImportant ->
             False
+
+
+encodeQuadrantType : QuadrantType -> JE.Value
+encodeQuadrantType quadrantType =
+    JE.string <| toString quadrantType
+
+
+decodeModel : JD.Decoder (List Activity)
+decodeModel =
+    field "activities" (JD.list decodeActivity)
+
+
+decodeActivity : JD.Decoder Activity
+decodeActivity =
+    JD.map4 Activity
+        (field "id" stringToUuidDecoder)
+        (field "name" JD.string)
+        (field "quadrant" quadrantTypeDecoder)
+        (field "timeSpent" JD.float)
+
+
+stringToUuidDecoder : JD.Decoder Uuid.Uuid
+stringToUuidDecoder =
+    JD.map stringToUuid JD.string
+
+
+stringToUuid : String -> Id
+stringToUuid str =
+    case Uuid.fromString str of
+        Just v ->
+            v
+
+        Nothing ->
+            Debug.crash "not possible"
+
+
+quadrantTypeDecoder : JD.Decoder QuadrantType
+quadrantTypeDecoder =
+    JD.map
+        (\qtStr ->
+            case qtStr of
+                "UrgentAndImportant" ->
+                    UrgentAndImportant
+
+                "ImportantNotUrgent" ->
+                    ImportantNotUrgent
+
+                "UrgentNotImportant" ->
+                    UrgentNotImportant
+
+                "NotUrgentNotImportant" ->
+                    NotUrgentNotImportant
+
+                _ ->
+                    Debug.crash "Wrong quadrant type."
+        )
+        JD.string

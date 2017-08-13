@@ -1,5 +1,6 @@
 module Message exposing (..)
 
+import Json.Decode as JDecode
 import Material
 import Quadrant.Message as QMsg
 

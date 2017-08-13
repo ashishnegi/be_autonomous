@@ -1,6 +1,7 @@
 module Main exposing (main)
 
-import Html exposing (Html, program)
+import Html exposing (Html, programWithFlags)
+import Json.Decode as JD
 import Material
 import Material.Select as Select
 import Message as Msg
@@ -14,7 +15,7 @@ import View exposing (view)
 
 
 main =
-    program
+    programWithFlags
         { init = init
         , view = view
         , update = update
@@ -22,14 +23,15 @@ main =
         }
 
 
-init =
+init : String -> ( Model, Cmd Msg.Msg )
+init val =
     let
         collapseView =
             QM.QuadrantView False
-    in
-        ( Model
-            (QM.QuadrantModel
-                [ { id = stringToUuid "0a431ce2-5c3b-4c66-8e00-cfd08cbe2e91", name = "how is it going.. how is it going.. how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
+
+        activities =
+            Result.withDefault
+                [ { id = stringToUuid "0a431ce2-5c3b-4c66-8e00-cfd08cbe2e91", name = val, quadrant = QM.UrgentAndImportant, timeSpent = 30 }
                 , { id = stringToUuid "79f14407-657d-4028-9ee7-a34dc07da535", name = "how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
                 , { id = stringToUuid "79f3a82b-0441-43ab-8359-b7aec537787d", name = "how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
                 , { id = stringToUuid "e9354ce5-8323-4ef6-bbac-994db21e3fc4", name = "how is it going..", quadrant = QM.UrgentAndImportant, timeSpent = 30 }
@@ -39,7 +41,11 @@ init =
                 , { id = stringToUuid "79f3a82b-0441-43ab-8359-b7aec537787d", name = "how is it going..", quadrant = QM.ImportantNotUrgent, timeSpent = 30 }
                 , { id = stringToUuid "e9354ce5-8323-4ef6-bbac-994db21e3fc4", name = "how is it going..", quadrant = QM.ImportantNotUrgent, timeSpent = 30 }
                 ]
-                -- []
+                (JD.decodeString QM.decodeModel val)
+    in
+        ( Model
+            (QM.QuadrantModel
+                activities
                 (QM.ViewData ""
                     True
                     True
