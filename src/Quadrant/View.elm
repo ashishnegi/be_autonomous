@@ -25,6 +25,7 @@ import Material.Tooltip as Tooltip
 import Material.Typography as Typo
 import Quadrant.Message as QMsg exposing (Msg)
 import Quadrant.Model as QM exposing (QuadrantModel, Activity)
+import Round
 import String
 
 
@@ -400,10 +401,17 @@ renderReportGeneration model =
             report =
                 QM.quadrantRatioTimes model.activities
         in
-            div []
-                (List.append
-                    (List.map renderReportResult report)
-                    [ Button.render QMsg.Mdl
+            Grid.grid []
+                [ Grid.cell
+                    [ Grid.size Grid.All 12
+                    , Grid.size Grid.Desktop 6
+                    ]
+                    [ Options.span
+                        [ Typo.headline ]
+                        [ text "Your life in quadrants" ]
+                    , MList.ul []
+                        (List.map renderReportResult report)
+                    , Button.render QMsg.Mdl
                         QM.collapseReportIndex
                         model.viewData.mdl
                         [ Button.raised
@@ -411,9 +419,11 @@ renderReportGeneration model =
                         , Button.ripple
                         , Options.onClick QMsg.ToCreateActivityMode
                         ]
-                        [ text "Collapse" ]
+                        [ Options.span [ Typo.capitalize ]
+                            [ text "Collapse" ]
+                        ]
                     ]
-                )
+                ]
     else
         div []
             [ Button.render QMsg.Mdl
@@ -436,9 +446,16 @@ renderReportGeneration model =
 
 renderReportResult : QM.Result -> Html Msg
 renderReportResult result =
-    div []
-        [ text (toString result.quadrant)
-        , text (toString result.ratio)
+    MList.li []
+        [ MList.content []
+            [ text <| QM.quadrantToName result.quadrant ]
+        , MList.content2 []
+            [ result.ratio
+                * 100
+                |> Round.round 2
+                |> stringPrepend " %"
+                |> text
+            ]
         ]
 
 

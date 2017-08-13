@@ -22,7 +22,7 @@ elm-install -t
 ~Done *) Make lists nicer.
 ~Done 7) Toast message on adding of activity. ~ added badge new activity counter on button.
 7) Report generation.
-8) Collapse button as part of "header" of Quadrant activity list.
+~Not needed 8) Collapse button as part of "header" of Quadrant activity list.
 9) How and where to store the data.
 10) Mobile app.
 11) Deploy on heroku.
