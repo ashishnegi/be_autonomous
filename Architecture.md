@@ -21,6 +21,9 @@ elm-install -t
 6) User using it to track : future or current.
 7) Report generation.
 8) Collapse button as part of "header" of Quadrant activity list.
+9) How and where to store the data.
+10) Mobile app.
+11) Deploy on heroku.
 
 # Implementation:
 ~Done: 1) tell elm-mdl ... Not required.
