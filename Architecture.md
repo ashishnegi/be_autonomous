@@ -26,9 +26,10 @@ elm-install -t
 ~ Done 9) How and where to store the data. ~ localstorage / app : putting in localstorage
 ~ Done 10) Mobile app. ~ installed in friends phone
 ~ Done 11) Deploy on heroku.
-12) Topbar not coming.
+~ Done 12) Topbar not coming.
 13) Dropdown causing input-keyboard to open.
 14) Checkbox not good.
+~ Done 15) Name of quadrant.
 **) mobile app : publish : end of month.
 
 

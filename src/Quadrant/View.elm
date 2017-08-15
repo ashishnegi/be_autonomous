@@ -107,7 +107,7 @@ c. Urgent but not Important :
    - Some email.
 
 d. Not Urgent and not Important :
-   - Going through social media feeds.
+   - Too much social media usage, too much TV.
               """
             ]
         ]
@@ -191,11 +191,19 @@ renderQuadrantCollapse quadrantType activities viewData =
                 ]
                 [ Card.title []
                     [ Card.head [ white ]
-                        [ Icon.view urgentIcon [ Options.css "width" "40px" ]
-                        , text <| "Urgent"
+                        [ text <| QM.quadrantToName quadrantType ]
+                    , Card.subhead [ white ]
+                        [ Icon.view urgentIcon
+                            [ Icon.size18
+                            , Options.css "width" "30px"
+                            ]
+                        , Options.span [ Grid.align Grid.Top ] [ text "Urgent" ]
                         ]
-                    , Card.head [ white ]
-                        [ Icon.view importantIcon [ Options.css "width" "40px" ]
+                    , Card.subhead [ white ]
+                        [ Icon.view importantIcon
+                            [ Icon.size18
+                            , Options.css "width" "30px"
+                            ]
                         , text <| "Important"
                         ]
                     ]
@@ -409,6 +417,48 @@ rawView model =
         |> text
 
 
+justValue : Maybe v -> v
+justValue maybeV =
+    case maybeV of
+        Just val ->
+            val
+
+        Nothing ->
+            Debug.crash ("Expected Just value but got Nothing")
+
+
+reportAnalysis : List QM.Result -> Html Msg
+reportAnalysis results =
+    let
+        q2Result =
+            results
+                |> List.filter (\x -> x.quadrant == QM.ImportantNotUrgent)
+                |> List.head
+                |> justValue
+    in
+        div []
+            [ Options.styled p [ Typo.title ] [ text "Next action :" ]
+            , if q2Result.ratio == 0 then
+                Options.span [ Typo.subhead ]
+                    [ text "You should think about important things you are not doing and Add them to the list with time 0 mins." ]
+              else if q2Result.ratio > 0.6 then
+                Options.span [ Typo.subhead ]
+                    [ text "Wow.. you are doing way too good.. More than 60 % time of usefult activities. "
+                    , text "Hope you have considered all your activities.."
+                    ]
+              else if q2Result.ratio > 0.3 then
+                Options.span [ Typo.subhead ]
+                    [ text "You are on good path.. "
+                    , text "Keep on moving more time from non-useful activities to important work.."
+                    ]
+              else
+                Options.span [ Typo.subhead ]
+                    [ text "Start taking some time from Non-useful activities and save them for planning important work. "
+                    , text "This will reduce crisis situations in your life."
+                    ]
+            ]
+
+
 renderReportGeneration : QuadrantModel -> Html Msg
 renderReportGeneration model =
     if QM.shouldGenerateReport model then
@@ -426,7 +476,14 @@ renderReportGeneration model =
                         [ text "Your life in quadrants" ]
                     , MList.ul []
                         (List.map renderReportResult report)
-                    , Button.render QMsg.Mdl
+                    ]
+                , Utils.cell
+                    [ Grid.size Grid.All 12 ]
+                    [ reportAnalysis report
+                    ]
+                , Grid.cell
+                    [ Grid.size Grid.All 12 ]
+                    [ Button.render QMsg.Mdl
                         QM.collapseReportIndex
                         model.viewData.mdl
                         [ Button.raised
@@ -437,6 +494,8 @@ renderReportGeneration model =
                         [ Options.span [ Typo.capitalize ]
                             [ text "Collapse" ]
                         ]
+
+                    -- , text (toString report)
                     ]
                 ]
     else

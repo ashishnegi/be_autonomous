@@ -329,16 +329,16 @@ quadrantToName : QuadrantType -> String
 quadrantToName quadrant =
     case quadrant of
         UrgentAndImportant ->
-            "Urgent & Important"
+            "Crisis"
 
         ImportantNotUrgent ->
-            "Important but not Urgent"
+            "Holy Grail"
 
         UrgentNotImportant ->
-            "Urgent but not Important"
+            "Interruptions"
 
         NotUrgentNotImportant ->
-            "Not Urgent & Not Important"
+            "Time Waste"
 
 
 newActivityTextInputIndex =
