@@ -4,6 +4,4 @@ elm-stuff-elm-package
 .#*
 TAGS
 elm-stuff
-*.js
-*.css
-phonegap
+index.js

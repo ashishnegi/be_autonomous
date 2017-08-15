@@ -39,3 +39,4 @@ elm-install -t
 
 # Tried:
 1) react-native : requires npm version < 5.
+2) phonegap : working good with minimal changes in phonegap.
