@@ -18984,13 +18984,13 @@ var _user$project$Quadrant_Model$quadrantToName = function (quadrant) {
 	var _p5 = quadrant;
 	switch (_p5.ctor) {
 		case 'UrgentAndImportant':
-			return 'Urgent & Important';
+			return 'Crisis';
 		case 'ImportantNotUrgent':
-			return 'Important but not Urgent';
+			return 'Holy Grail';
 		case 'UrgentNotImportant':
-			return 'Urgent but not Important';
+			return 'Interruptions';
 		default:
-			return 'Not Urgent & Not Important';
+			return 'Time Waste';
 	}
 };
 var _user$project$Quadrant_Model$timeRangeToName = _elm_lang$core$Basics$toString;
@@ -19612,6 +19612,18 @@ var _user$project$Update$update = F2(
 		}
 	});
 
+var _user$project$Utils$cellUpDown = function (css) {
+	return _debois$elm_mdl$Material_Grid$cell(
+		{
+			ctor: '::',
+			_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-up', '0px'),
+			_1: {
+				ctor: '::',
+				_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-down', '0px'),
+				_1: css
+			}
+		});
+};
 var _user$project$Utils$cell = function (css) {
 	return _debois$elm_mdl$Material_Grid$cell(
 		{
@@ -19660,6 +19672,110 @@ var _user$project$Quadrant_View$dynamic = F3(
 				}
 			});
 	});
+var _user$project$Quadrant_View$justValue = function (maybeV) {
+	var _p0 = maybeV;
+	if (_p0.ctor === 'Just') {
+		return _p0._0;
+	} else {
+		return _elm_lang$core$Native_Utils.crashCase(
+			'Quadrant.View',
+			{
+				start: {line: 422, column: 5},
+				end: {line: 427, column: 64}
+			},
+			_p0)('Expected Just value but got Nothing');
+	}
+};
+var _user$project$Quadrant_View$reportAnalysis = function (results) {
+	var q2Result = _user$project$Quadrant_View$justValue(
+		_elm_lang$core$List$head(
+			A2(
+				_elm_lang$core$List$filter,
+				function (x) {
+					return _elm_lang$core$Native_Utils.eq(x.quadrant, _user$project$Quadrant_Model$ImportantNotUrgent);
+				},
+				results)));
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A3(
+				_debois$elm_mdl$Material_Options$styled,
+				_elm_lang$html$Html$p,
+				{
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Typography$title,
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('Next action :'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$core$Native_Utils.eq(q2Result.ratio, 0) ? A2(
+					_debois$elm_mdl$Material_Options$span,
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Typography$subhead,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('You should think about important things you are not doing and Add them to the list with time 0 mins.'),
+						_1: {ctor: '[]'}
+					}) : ((_elm_lang$core$Native_Utils.cmp(q2Result.ratio, 0.6) > 0) ? A2(
+					_debois$elm_mdl$Material_Options$span,
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Typography$subhead,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Wow.. you are doing way too good.. More than 60 % time of usefult activities. '),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Hope you have considered all your activities..'),
+							_1: {ctor: '[]'}
+						}
+					}) : ((_elm_lang$core$Native_Utils.cmp(q2Result.ratio, 0.3) > 0) ? A2(
+					_debois$elm_mdl$Material_Options$span,
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Typography$subhead,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('You are on good path.. '),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Keep on moving more time from non-useful activities to important work..'),
+							_1: {ctor: '[]'}
+						}
+					}) : A2(
+					_debois$elm_mdl$Material_Options$span,
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Typography$subhead,
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('Start taking some time from Non-useful activities and save them for planning important work. '),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('This will reduce crisis situations in your life.'),
+							_1: {ctor: '[]'}
+						}
+					}))),
+				_1: {ctor: '[]'}
+			}
+		});
+};
 var _user$project$Quadrant_View$rawView = function (model) {
 	return _elm_lang$html$Html$text(
 		_elm_lang$core$Basics$toString(model));
@@ -20273,7 +20389,33 @@ var _user$project$Quadrant_View$renderReportGeneration = function (model) {
 								_debois$elm_mdl$Material_List$ul,
 								{ctor: '[]'},
 								A2(_elm_lang$core$List$map, _user$project$Quadrant_View$renderReportResult, report)),
-							_1: {
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_user$project$Utils$cell,
+						{
+							ctor: '::',
+							_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 12),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _user$project$Quadrant_View$reportAnalysis(report),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_debois$elm_mdl$Material_Grid$cell,
+							{
+								ctor: '::',
+								_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 12),
+								_1: {ctor: '[]'}
+							},
+							{
 								ctor: '::',
 								_0: A5(
 									_debois$elm_mdl$Material_Button$render,
@@ -20314,10 +20456,10 @@ var _user$project$Quadrant_View$renderReportGeneration = function (model) {
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
-							}
-						}
-					}),
-				_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
 			});
 	} else {
 		return A2(
@@ -20374,7 +20516,7 @@ var _user$project$Quadrant_View$renderHelpText = function (model) {
 		{
 			ctor: '::',
 			_0: A2(
-				_debois$elm_mdl$Material_Grid$cell,
+				_user$project$Utils$cell,
 				{
 					ctor: '::',
 					_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 1),
@@ -20414,7 +20556,7 @@ var _user$project$Quadrant_View$renderHelpText = function (model) {
 			_1: {
 				ctor: '::',
 				_0: A2(
-					_debois$elm_mdl$Material_Grid$cell,
+					_user$project$Utils$cellUpDown,
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 11),
@@ -20422,9 +20564,8 @@ var _user$project$Quadrant_View$renderHelpText = function (model) {
 					},
 					{
 						ctor: '::',
-						_0: A3(
-							_debois$elm_mdl$Material_Options$styled,
-							_elm_lang$html$Html$p,
+						_0: A2(
+							_debois$elm_mdl$Material_Options$span,
 							{
 								ctor: '::',
 								_0: _debois$elm_mdl$Material_Typography$headline,
@@ -20444,17 +20585,26 @@ var _user$project$Quadrant_View$renderHelpText = function (model) {
 						{
 							ctor: '::',
 							_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 12),
-							_1: {ctor: '[]'}
+							_1: (!model.viewData.showHelpMsg) ? {
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Grid$hide(_debois$elm_mdl$Material_Grid$Phone),
+								_1: {
+									ctor: '::',
+									_0: _debois$elm_mdl$Material_Grid$hide(_debois$elm_mdl$Material_Grid$Tablet),
+									_1: {
+										ctor: '::',
+										_0: _debois$elm_mdl$Material_Grid$hide(_debois$elm_mdl$Material_Grid$Desktop),
+										_1: {ctor: '[]'}
+									}
+								}
+							} : {ctor: '[]'}
 						},
 						{
 							ctor: '::',
-							_0: model.viewData.showHelpMsg ? A2(
+							_0: A2(
 								_evancz$elm_markdown$Markdown$toHtml,
 								{ctor: '[]'},
-								'\n> Urgent task is something that needs to be done now.\n> Important task is one that will benefit us in long run.\n\nExamples :\n\na. Urgent and Important :\n   - Crisis and Pressing problems.\n   - Medical situation.\n\nb. Important but not Urgent :\n   - Reading book relevent to your field.\n   - Planning next family outing.\n\nc. Urgent but not Important :\n   - Some meeting.\n   - Some email.\n\nd. Not Urgent and not Important :\n   - Going through social media feeds.\n              ') : A2(
-								_elm_lang$html$Html$div,
-								{ctor: '[]'},
-								{ctor: '[]'}),
+								'\n> Urgent task is something that needs to be done now.\n> Important task is one that will benefit us in long run.\n\nExamples :\n\na. Urgent and Important :\n   - Crisis and Pressing problems.\n   - Medical situation.\n\nb. Important but not Urgent :\n   - Reading book relevent to your field.\n   - Planning next family outing.\n\nc. Urgent but not Important :\n   - Some meeting.\n   - Some email.\n\nd. Not Urgent and not Important :\n   - Too much social media usage, too much TV.\n              '),
 							_1: {ctor: '[]'}
 						}),
 					_1: {ctor: '[]'}
@@ -20462,10 +20612,10 @@ var _user$project$Quadrant_View$renderHelpText = function (model) {
 			}
 		});
 };
-var _user$project$Quadrant_View$_p0 = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('lifeview');
-var _user$project$Quadrant_View$id = _user$project$Quadrant_View$_p0.id;
-var _user$project$Quadrant_View$class = _user$project$Quadrant_View$_p0.$class;
-var _user$project$Quadrant_View$classList = _user$project$Quadrant_View$_p0.classList;
+var _user$project$Quadrant_View$_p2 = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('lifeview');
+var _user$project$Quadrant_View$id = _user$project$Quadrant_View$_p2.id;
+var _user$project$Quadrant_View$class = _user$project$Quadrant_View$_p2.$class;
+var _user$project$Quadrant_View$classList = _user$project$Quadrant_View$_p2.classList;
 var _user$project$Quadrant_View$white = _debois$elm_mdl$Material_Color$text(_debois$elm_mdl$Material_Color$white);
 var _user$project$Quadrant_View$renderQuadrantCollapse = F3(
 	function (quadrantType, activities, viewData) {
@@ -20522,24 +20672,14 @@ var _user$project$Quadrant_View$renderQuadrantCollapse = F3(
 									},
 									{
 										ctor: '::',
-										_0: A2(
-											_debois$elm_mdl$Material_Icon$view,
-											urgentIcon,
-											{
-												ctor: '::',
-												_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '40px'),
-												_1: {ctor: '[]'}
-											}),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html$text('Urgent'),
-											_1: {ctor: '[]'}
-										}
+										_0: _elm_lang$html$Html$text(
+											_user$project$Quadrant_Model$quadrantToName(quadrantType)),
+										_1: {ctor: '[]'}
 									}),
 								_1: {
 									ctor: '::',
 									_0: A2(
-										_debois$elm_mdl$Material_Card$head,
+										_debois$elm_mdl$Material_Card$subhead,
 										{
 											ctor: '::',
 											_0: _user$project$Quadrant_View$white,
@@ -20549,19 +20689,64 @@ var _user$project$Quadrant_View$renderQuadrantCollapse = F3(
 											ctor: '::',
 											_0: A2(
 												_debois$elm_mdl$Material_Icon$view,
-												importantIcon,
+												urgentIcon,
 												{
 													ctor: '::',
-													_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '40px'),
-													_1: {ctor: '[]'}
+													_0: _debois$elm_mdl$Material_Icon$size18,
+													_1: {
+														ctor: '::',
+														_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '30px'),
+														_1: {ctor: '[]'}
+													}
 												}),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('Important'),
+												_0: A2(
+													_debois$elm_mdl$Material_Options$span,
+													{
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Grid$align(_debois$elm_mdl$Material_Grid$Top),
+														_1: {ctor: '[]'}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Urgent'),
+														_1: {ctor: '[]'}
+													}),
 												_1: {ctor: '[]'}
 											}
 										}),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Card$subhead,
+											{
+												ctor: '::',
+												_0: _user$project$Quadrant_View$white,
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: A2(
+													_debois$elm_mdl$Material_Icon$view,
+													importantIcon,
+													{
+														ctor: '::',
+														_0: _debois$elm_mdl$Material_Icon$size18,
+														_1: {
+															ctor: '::',
+															_0: A2(_debois$elm_mdl$Material_Options$css, 'width', '30px'),
+															_1: {ctor: '[]'}
+														}
+													}),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Important'),
+													_1: {ctor: '[]'}
+												}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}
 							}),
 						_1: {
@@ -20670,7 +20855,7 @@ var _user$project$Quadrant_View$view = function (model) {
 			_1: {
 				ctor: '::',
 				_0: A2(
-					_debois$elm_mdl$Material_Grid$cell,
+					_user$project$Utils$cellUpDown,
 					{
 						ctor: '::',
 						_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 12),
@@ -20747,42 +20932,45 @@ var _user$project$View$footerView = A2(
 					{
 						ctor: '::',
 						_0: _debois$elm_mdl$Material_Footer$html(
-							_elm_lang$html$Html$text('Like us @ ')),
+							_elm_lang$html$Html$text('Love us @ ')),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_debois$elm_mdl$Material_Footer$socialButton,
-						{
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-right', '6px'),
-							_1: {ctor: '[]'}
-						},
-						{ctor: '[]'}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Footer$socialButton,
+					_0: _debois$elm_mdl$Material_Footer$html(
+						A2(
+							_elm_lang$html$Html$div,
 							{
 								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-right', '6px'),
-								_1: {ctor: '[]'}
-							},
-							{ctor: '[]'}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_debois$elm_mdl$Material_Footer$socialButton,
-								{
+								_0: _elm_lang$html$Html_Attributes$class('fb-like'),
+								_1: {
 									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-right', '0px'),
-									_1: {ctor: '[]'}
-								},
-								{ctor: '[]'}),
-							_1: {ctor: '[]'}
-						}
-					}
+									_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-action', 'like'),
+									_1: {
+										ctor: '::',
+										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-href', 'https://www.facebook.com/WindowOfLifeApp/'),
+										_1: {
+											ctor: '::',
+											_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-layout', 'button'),
+											_1: {
+												ctor: '::',
+												_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-share', 'true'),
+												_1: {
+													ctor: '::',
+													_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-show-faces', 'true'),
+													_1: {
+														ctor: '::',
+														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-size', 'small'),
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
+								}
+							},
+							{ctor: '[]'})),
+					_1: {ctor: '[]'}
 				}
 			})
 	});
@@ -20799,7 +20987,7 @@ var _user$project$View$quadrantView = function (model) {
 					_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 2),
 					_1: {
 						ctor: '::',
-						_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Phone, 1),
+						_0: _debois$elm_mdl$Material_Grid$hide(_debois$elm_mdl$Material_Grid$Phone),
 						_1: {ctor: '[]'}
 					}
 				},
@@ -20813,7 +21001,7 @@ var _user$project$View$quadrantView = function (model) {
 						_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 8),
 						_1: {
 							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Phone, 10),
+							_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Phone, 12),
 							_1: {ctor: '[]'}
 						}
 					},
@@ -20834,7 +21022,7 @@ var _user$project$View$quadrantView = function (model) {
 							_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$All, 2),
 							_1: {
 								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Grid$size, _debois$elm_mdl$Material_Grid$Phone, 1),
+								_0: _debois$elm_mdl$Material_Grid$hide(_debois$elm_mdl$Material_Grid$Phone),
 								_1: {ctor: '[]'}
 							}
 						},
@@ -20856,7 +21044,11 @@ var _user$project$View$view = function (model) {
 			{
 				ctor: '::',
 				_0: _debois$elm_mdl$Material_Layout$scrolling,
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Layout$fixedHeader,
+					_1: {ctor: '[]'}
+				}
 			},
 			{
 				header: {
@@ -20948,8 +21140,8 @@ var _user$project$Main$stringToUuid = function (str) {
 		return _elm_lang$core$Native_Utils.crashCase(
 			'Main',
 			{
-				start: {line: 73, column: 5},
-				end: {line: 78, column: 39}
+				start: {line: 74, column: 5},
+				end: {line: 79, column: 39}
 			},
 			_p0)('not possible');
 	}
@@ -20957,88 +21149,7 @@ var _user$project$Main$stringToUuid = function (str) {
 var _user$project$Main$init = function (val) {
 	var activities = A2(
 		_elm_lang$core$Result$withDefault,
-		{
-			ctor: '::',
-			_0: {
-				id: _user$project$Main$stringToUuid('0a431ce2-5c3b-4c66-8e00-cfd08cbe2e91'),
-				name: val,
-				quadrant: _user$project$Quadrant_Model$UrgentAndImportant,
-				timeSpent: 30
-			},
-			_1: {
-				ctor: '::',
-				_0: {
-					id: _user$project$Main$stringToUuid('79f14407-657d-4028-9ee7-a34dc07da535'),
-					name: 'how is it going..',
-					quadrant: _user$project$Quadrant_Model$UrgentAndImportant,
-					timeSpent: 30
-				},
-				_1: {
-					ctor: '::',
-					_0: {
-						id: _user$project$Main$stringToUuid('79f3a82b-0441-43ab-8359-b7aec537787d'),
-						name: 'how is it going..',
-						quadrant: _user$project$Quadrant_Model$UrgentAndImportant,
-						timeSpent: 30
-					},
-					_1: {
-						ctor: '::',
-						_0: {
-							id: _user$project$Main$stringToUuid('e9354ce5-8323-4ef6-bbac-994db21e3fc4'),
-							name: 'how is it going..',
-							quadrant: _user$project$Quadrant_Model$UrgentAndImportant,
-							timeSpent: 30
-						},
-						_1: {
-							ctor: '::',
-							_0: {
-								id: _user$project$Main$stringToUuid('48cce67d-a40b-4112-be49-a49cb9897201'),
-								name: 'so whats up..',
-								quadrant: _user$project$Quadrant_Model$UrgentAndImportant,
-								timeSpent: 30
-							},
-							_1: {
-								ctor: '::',
-								_0: {
-									id: _user$project$Main$stringToUuid('0a431ce2-5c3b-4c66-8e00-cfd08cbe2e91'),
-									name: 'how is it going.. how is it going.. how is it going..',
-									quadrant: _user$project$Quadrant_Model$ImportantNotUrgent,
-									timeSpent: 30
-								},
-								_1: {
-									ctor: '::',
-									_0: {
-										id: _user$project$Main$stringToUuid('79f14407-657d-4028-9ee7-a34dc07da535'),
-										name: 'how is it going..',
-										quadrant: _user$project$Quadrant_Model$ImportantNotUrgent,
-										timeSpent: 30
-									},
-									_1: {
-										ctor: '::',
-										_0: {
-											id: _user$project$Main$stringToUuid('79f3a82b-0441-43ab-8359-b7aec537787d'),
-											name: 'how is it going..',
-											quadrant: _user$project$Quadrant_Model$ImportantNotUrgent,
-											timeSpent: 30
-										},
-										_1: {
-											ctor: '::',
-											_0: {
-												id: _user$project$Main$stringToUuid('e9354ce5-8323-4ef6-bbac-994db21e3fc4'),
-												name: 'how is it going..',
-												quadrant: _user$project$Quadrant_Model$ImportantNotUrgent,
-												timeSpent: 30
-											},
-											_1: {ctor: '[]'}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		},
+		{ctor: '[]'},
 		A2(_elm_lang$core$Json_Decode$decodeString, _user$project$Quadrant_Model$decodeModel, val));
 	var collapseView = _user$project$Quadrant_Model$QuadrantView(false);
 	return {
