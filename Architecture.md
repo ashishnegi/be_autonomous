@@ -23,9 +23,10 @@ elm-install -t
 ~Done 7) Toast message on adding of activity. ~ added badge new activity counter on button.
 7) Report generation.
 ~Not needed 8) Collapse button as part of "header" of Quadrant activity list.
-9) How and where to store the data. ~ localstorage / app
-10) Mobile app.
+~ Done 9) How and where to store the data. ~ localstorage / app : putting in localstorage
+~ Done 10) Mobile app. ~ installed in friends phone
 11) Deploy on heroku.
+12) mobile app : publish : end of month.
 
 
 # Implementation:
@@ -39,4 +40,5 @@ elm-install -t
 
 # Tried:
 1) react-native : requires npm version < 5.
-2) phonegap : working good with minimal changes in phonegap.
+2) phonegap : working good with minimal changes in phonegap. : many problem with android-studio
+3) cordova : finally went with cordova and it has all the features that i need. cordova run android puts on mobile also.. :)

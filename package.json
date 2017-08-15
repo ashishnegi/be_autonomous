@@ -1,0 +1,11 @@
+{
+  "name": "window_of_life",
+  "version": "0.0.1",
+  "description": "Track your life",
+  "scripts": {
+    "start": "harp server --port $PORT"
+  },
+  "dependencies": {
+    "harp": "*"
+  }
+}
