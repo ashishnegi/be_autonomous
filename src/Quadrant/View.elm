@@ -45,8 +45,7 @@ view model =
         []
         [ Grid.cell [ Grid.size Grid.All 12 ]
             [ renderHelpText model ]
-        , Grid.cell
-            [ Grid.size Grid.All 12 ]
+        , Utils.cellUpDown [ Grid.size Grid.All 12 ]
             [ renderNewActivityInput model ]
         , Utils.cell [ Grid.size Grid.All 12 ]
             [ renderQuadrants model ]
@@ -61,7 +60,7 @@ view model =
 renderHelpText : QuadrantModel -> Html QMsg.Msg
 renderHelpText model =
     Utils.grid []
-        [ Grid.cell [ Grid.size Grid.All 1 ]
+        [ Utils.cell [ Grid.size Grid.All 1 ]
             [ Button.render QMsg.Mdl
                 QM.helpTextIndex
                 model.viewData.mdl
@@ -72,15 +71,24 @@ renderHelpText model =
                 ]
                 [ Icon.i "help_outline" ]
             ]
-        , Grid.cell [ Grid.size Grid.All 11 ]
-            [ Options.styled p
+        , Utils.cellUpDown [ Grid.size Grid.All 11 ]
+            [ Options.span
                 [ Typo.headline ]
                 [ text "Quadrant view of Life" ]
             ]
-        , Grid.cell [ Grid.size Grid.All 12 ]
-            [ if model.viewData.showHelpMsg then
-                Markdown.toHtml []
-                    """
+        , Grid.cell
+            (Grid.size Grid.All 12
+                :: (if not model.viewData.showHelpMsg then
+                        [ Grid.hide Grid.Phone
+                        , Grid.hide Grid.Tablet
+                        , Grid.hide Grid.Desktop
+                        ]
+                    else
+                        []
+                   )
+            )
+            [ Markdown.toHtml []
+                """
 > Urgent task is something that needs to be done now.
 > Important task is one that will benefit us in long run.
 
@@ -101,8 +109,6 @@ c. Urgent but not Important :
 d. Not Urgent and not Important :
    - Going through social media feeds.
               """
-              else
-                div [] []
             ]
         ]
 

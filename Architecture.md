@@ -25,8 +25,11 @@ elm-install -t
 ~Not needed 8) Collapse button as part of "header" of Quadrant activity list.
 ~ Done 9) How and where to store the data. ~ localstorage / app : putting in localstorage
 ~ Done 10) Mobile app. ~ installed in friends phone
-11) Deploy on heroku.
-12) mobile app : publish : end of month.
+~ Done 11) Deploy on heroku.
+12) Topbar not coming.
+13) Dropdown causing input-keyboard to open.
+14) Checkbox not good.
+**) mobile app : publish : end of month.
 
 
 # Implementation:
@@ -42,3 +45,9 @@ elm-install -t
 1) react-native : requires npm version < 5.
 2) phonegap : working good with minimal changes in phonegap. : many problem with android-studio
 3) cordova : finally went with cordova and it has all the features that i need. cordova run android puts on mobile also.. :)
+
+
+# ToKeep in mind:
+## Cordova :
+1) cordova index.html is different.
+2) we include material-design css files ourselves.

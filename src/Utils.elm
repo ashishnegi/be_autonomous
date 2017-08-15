@@ -14,3 +14,11 @@ cell css =
             :: Options.css "margin-right" "0px"
             :: css
         )
+
+
+cellUpDown css =
+    Grid.cell
+        (Options.css "margin-up" "0px"
+            :: Options.css "margin-down" "0px"
+            :: css
+        )

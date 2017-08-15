@@ -20,7 +20,9 @@ view model =
     Material.Scheme.topWithScheme Color.Teal Color.LightGreen <|
         Layout.render Msg.Mdl
             model.mdl
-            [ Layout.scrolling ]
+            [ Layout.scrolling
+            , Layout.fixedHeader
+            ]
             { header =
                 [ Layout.row []
                     [ Layout.title [] [ text "window of life" ] ]
@@ -45,19 +47,19 @@ quadrantView model =
         []
         [ Grid.cell
             [ Grid.size Grid.All 2
-            , Grid.size Grid.Phone 1
+            , Grid.hide Grid.Phone
             ]
             -- Todo: remove in mobile
             []
         , Utils.cell
             [ Grid.size Grid.All 8
-            , Grid.size Grid.Phone 10
+            , Grid.size Grid.Phone 12
             ]
             [ Html.map Msg.Quadrant (QV.view model.quadrant)
             ]
         , Grid.cell
             [ Grid.size Grid.All 2
-            , Grid.size Grid.Phone 1
+            , Grid.hide Grid.Phone
             ]
             []
         ]
