@@ -52,3 +52,7 @@ elm-install -t
 ## Cordova :
 1) cordova index.html is different.
 2) we include material-design css files ourselves.
+
+# Debugging
+3) Enabled : Settings -> About Phone -> Build Number -> Tap 10 times -> back. -> Developer Options -> Usb debugging
+4) Console logs and debugging in chrome browser : chrome://inspect/#devices

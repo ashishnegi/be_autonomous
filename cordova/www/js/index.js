@@ -38,7 +38,21 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 	var node = document.getElementById('main');
-        var app = Elm.Main.embed(node);
-        console.log('Received Event: ' + id);
+	var oldModel = window.localStorage ? window.localStorage.getItem("model") : null;
+	var app = Elm.Main.embed(node, oldModel ? oldModel : "null");
+	app.ports.setToLS.subscribe(function(modelStr) {
+	  window.localStorage.setItem("model", modelStr);
+  });
+
+        // (function(d, s, id) {
+        //     var js, fjs = d.getElementsByTagName(s)[0];
+        //     if (d.getElementById(id)) return;
+        //     js = d.createElement(s); js.id = id;
+        //     js.src = "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.10&appId=1905032179713517";
+        //     fjs.parentNode.insertBefore(js, fjs);
+        // }(document, 'script', 'facebook-jssdk'));
+	console.log('Received Event: ' + id);
     }
 };
+
+app.initialize();
