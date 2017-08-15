@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="assets/material.teal-light_green.min.css" />
   </head>
   <body>
+
+    <!-- Facebook code -->
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.10&appId=1905032179713517";
+        fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!-- ELM code -->
     <div id="main"></div>
     <script type="text/javascript" src="index.js"></script>
     <script type="text/javascript">

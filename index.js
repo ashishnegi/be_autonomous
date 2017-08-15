@@ -20932,42 +20932,45 @@ var _user$project$View$footerView = A2(
 					{
 						ctor: '::',
 						_0: _debois$elm_mdl$Material_Footer$html(
-							_elm_lang$html$Html$text('Like us @ ')),
+							_elm_lang$html$Html$text('Love us @ ')),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_debois$elm_mdl$Material_Footer$socialButton,
-						{
-							ctor: '::',
-							_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-right', '6px'),
-							_1: {ctor: '[]'}
-						},
-						{ctor: '[]'}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Footer$socialButton,
+					_0: _debois$elm_mdl$Material_Footer$html(
+						A2(
+							_elm_lang$html$Html$div,
 							{
 								ctor: '::',
-								_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-right', '6px'),
-								_1: {ctor: '[]'}
-							},
-							{ctor: '[]'}),
-						_1: {
-							ctor: '::',
-							_0: A2(
-								_debois$elm_mdl$Material_Footer$socialButton,
-								{
+								_0: _elm_lang$html$Html_Attributes$class('fb-like'),
+								_1: {
 									ctor: '::',
-									_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-right', '0px'),
-									_1: {ctor: '[]'}
-								},
-								{ctor: '[]'}),
-							_1: {ctor: '[]'}
-						}
-					}
+									_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-action', 'like'),
+									_1: {
+										ctor: '::',
+										_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-href', 'https://www.facebook.com/WindowOfLifeApp/'),
+										_1: {
+											ctor: '::',
+											_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-layout', 'button'),
+											_1: {
+												ctor: '::',
+												_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-share', 'true'),
+												_1: {
+													ctor: '::',
+													_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-show-faces', 'true'),
+													_1: {
+														ctor: '::',
+														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'data-size', 'small'),
+														_1: {ctor: '[]'}
+													}
+												}
+											}
+										}
+									}
+								}
+							},
+							{ctor: '[]'})),
+					_1: {ctor: '[]'}
 				}
 			})
 	});

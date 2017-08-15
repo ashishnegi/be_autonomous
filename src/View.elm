@@ -1,6 +1,7 @@
 module View exposing (view)
 
 import Html exposing (Html, program, text, p)
+import Html.Attributes as Attrs exposing (class, attribute)
 import Material.Color as Color
 import Material.Footer as Footer
 import Material.Grid as Grid
@@ -74,9 +75,17 @@ footerView =
                 ]
         , right =
             Footer.right []
-                [ Footer.logo [] [ Footer.html <| text "Like us @ " ]
-                , Footer.socialButton [ Options.css "margin-right" "6px" ] []
-                , Footer.socialButton [ Options.css "margin-right" "6px" ] []
-                , Footer.socialButton [ Options.css "margin-right" "0px" ] []
+                [ Footer.logo [] [ Footer.html <| text "Love us @ " ]
+                , Footer.html <|
+                    Html.div
+                        [ Attrs.class "fb-like"
+                        , Attrs.attribute "data-action" "like"
+                        , Attrs.attribute "data-href" "https://www.facebook.com/WindowOfLifeApp/"
+                        , Attrs.attribute "data-layout" "button"
+                        , Attrs.attribute "data-share" "true"
+                        , Attrs.attribute "data-show-faces" "true"
+                        , Attrs.attribute "data-size" "small"
+                        ]
+                        []
                 ]
         }
