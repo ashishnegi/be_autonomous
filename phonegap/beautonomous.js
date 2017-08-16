@@ -21063,8 +21063,38 @@ var _user$project$View$view = function (model) {
 								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('window of life'),
-									_1: {ctor: '[]'}
+									_0: A2(
+										_debois$elm_mdl$Material_Options$img,
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Grid$hide(_debois$elm_mdl$Material_Grid$Phone),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$src('assets/img/logo.png'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Options$span,
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Typography$title,
+												_1: {
+													ctor: '::',
+													_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-left', '20px'),
+													_1: {ctor: '[]'}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('window of life'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}),
 							_1: {ctor: '[]'}
 						}),
