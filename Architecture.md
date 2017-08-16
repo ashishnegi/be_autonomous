@@ -21,7 +21,7 @@ elm-install -t
 6) User using it to track : future or current.
 ~Done *) Make lists nicer.
 ~Done 7) Toast message on adding of activity. ~ added badge new activity counter on button.
-7) Report generation.
+~Done 7) Report generation. ~ some encouraging messages.
 ~Not needed 8) Collapse button as part of "header" of Quadrant activity list.
 ~ Done 9) How and where to store the data. ~ localstorage / app : putting in localstorage
 ~ Done 10) Mobile app. ~ installed in friends phone
@@ -30,6 +30,7 @@ elm-install -t
 13) Dropdown causing input-keyboard to open.
 14) Checkbox not good.
 ~ Done 15) Name of quadrant.
+~ Done 16) Firebase google analytics added.
 **) mobile app : publish : end of month.
 
 
