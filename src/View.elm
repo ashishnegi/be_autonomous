@@ -26,7 +26,15 @@ view model =
             ]
             { header =
                 [ Layout.row []
-                    [ Layout.title [] [ text "window of life" ] ]
+                    [ Layout.title []
+                        [ Options.img [ Grid.hide Grid.Phone ] [ Attrs.src "assets/img/logo.png" ]
+                        , Options.span
+                            [ Typo.title
+                            , Options.css "margin-left" "20px"
+                            ]
+                            [ text "window of life" ]
+                        ]
+                    ]
                 ]
             , drawer = []
             , tabs = ( [], [] )
