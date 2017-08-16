@@ -67,15 +67,24 @@
 
     <script type="text/javascript" src="phonegap/beautonomous.js"></script>
     <script type="text/javascript">
-     var node = document.getElementById('main');
-     var oldModel = window.localStorage ? window.localStorage.getItem("model") : null;
-     var app = Elm.Main.embed(node, oldModel ? oldModel : "null");
-     app.ports.setToLS.subscribe(function(modelStr) {
-         window.localStorage.setItem("model", modelStr);
-     });
+     /* var node = document.getElementById('main');
+      * var oldModel = window.localStorage ? window.localStorage.getItem("model") : null;
+      * var app = Elm.Main.embed(node, oldModel ? oldModel : "null");
+      * app.ports.setToLS.subscribe(function(modelStr) {
+      *     window.localStorage.setItem("model", modelStr);
+      * });
+
+      * app.ports.sendFirebaseAnalytics.subscribe(function(component) {
+      *     if (window.FirebasePlugin) {
+      *         window.FirebasePlugin.logEvent("select_content", {content_type: "used", item_id: component});
+      *     } else {
+      *         console.log("firebase plugin not present, ", component, window.FirebasePlugin);
+      *     }
+      * });
+      */
     </script>
 
-     <!-- <script type="text/javascript" src="cordova.js"></script>
-          <script type="text/javascript" src="js/index.js"></script> -->
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>

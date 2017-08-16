@@ -18831,8 +18831,13 @@ var _rtfeldman$elm_css_helpers$Html_CssHelpers$Namespace = F4(
 		return {$class: a, classList: b, id: c, name: d};
 	});
 
-var _user$project$LocalStorage$setToLS = _elm_lang$core$Native_Platform.outgoingPort(
+var _user$project$JavascriptCall$setToLS = _elm_lang$core$Native_Platform.outgoingPort(
 	'setToLS',
+	function (v) {
+		return v;
+	});
+var _user$project$JavascriptCall$sendFirebaseAnalytics = _elm_lang$core$Native_Platform.outgoingPort(
+	'sendFirebaseAnalytics',
 	function (v) {
 		return v;
 	});
@@ -18984,9 +18989,9 @@ var _user$project$Quadrant_Model$quadrantToName = function (quadrant) {
 	var _p5 = quadrant;
 	switch (_p5.ctor) {
 		case 'UrgentAndImportant':
-			return 'Crisis';
+			return 'Crisis situations';
 		case 'ImportantNotUrgent':
-			return 'Holy Grail';
+			return 'Productive and Planning';
 		case 'UrgentNotImportant':
 			return 'Interruptions';
 		default:
@@ -19454,23 +19459,28 @@ var _user$project$Quadrant_Update$update = F2(
 									newActivityTimeSpan: _user$project$Quadrant_Update$convertToFloat(_p2._0)
 								})
 						}),
-					_1: _elm_lang$core$Platform_Cmd$none
+					_1: _user$project$JavascriptCall$sendFirebaseAnalytics('timespan')
 				};
 			case 'NewActivity':
 				return {
 					ctor: '_Tuple2',
 					_0: _user$project$Quadrant_Model$commitNewActivity(model),
-					_1: _elm_lang$core$Platform_Cmd$none
+					_1: _user$project$JavascriptCall$sendFirebaseAnalytics('new_activity')
 				};
 			case 'ExpandQuadrant':
+				var _p3 = _p2._0;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							viewData: A2(_user$project$Quadrant_Update$toggleExpand, _p2._0, viewData)
+							viewData: A2(_user$project$Quadrant_Update$toggleExpand, _p3, viewData)
 						}),
-					_1: _elm_lang$core$Platform_Cmd$none
+					_1: _user$project$JavascriptCall$sendFirebaseAnalytics(
+						A2(
+							_elm_lang$core$String$append,
+							'expand_quadrant_',
+							_user$project$Quadrant_Model$quadrantToName(_p3)))
 				};
 			case 'GenerateReport':
 				return {
@@ -19482,7 +19492,7 @@ var _user$project$Quadrant_Update$update = F2(
 								viewData,
 								{viewMode: _user$project$Quadrant_Model$ViewReportMode})
 						}),
-					_1: _elm_lang$core$Platform_Cmd$none
+					_1: _user$project$JavascriptCall$sendFirebaseAnalytics('generate_report')
 				};
 			case 'ToCreateActivityMode':
 				return {
@@ -19494,7 +19504,7 @@ var _user$project$Quadrant_Update$update = F2(
 								viewData,
 								{viewMode: _user$project$Quadrant_Model$CreateActivityMode})
 						}),
-					_1: _elm_lang$core$Platform_Cmd$none
+					_1: _user$project$JavascriptCall$sendFirebaseAnalytics('to_create_activity_mode')
 				};
 			case 'DeleteActivity':
 				return {
@@ -19509,19 +19519,20 @@ var _user$project$Quadrant_Update$update = F2(
 								},
 								model.activities)
 						}),
-					_1: _elm_lang$core$Platform_Cmd$none
+					_1: _user$project$JavascriptCall$sendFirebaseAnalytics('delete_activity')
 				};
 			case 'TimeRangeMsg':
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					_elm_lang$core$Native_Utils.update(
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							viewData: _elm_lang$core$Native_Utils.update(
 								viewData,
 								{newActivityTimeRange: _p2._0})
 						}),
-					{ctor: '[]'});
+					_1: _user$project$JavascriptCall$sendFirebaseAnalytics('change_timerange')
+				};
 			case 'Raise':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
@@ -19534,42 +19545,49 @@ var _user$project$Quadrant_Update$update = F2(
 						}),
 					{ctor: '[]'});
 			case 'NewActivityImportant':
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					_elm_lang$core$Native_Utils.update(
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							viewData: _elm_lang$core$Native_Utils.update(
 								viewData,
 								{newActivityImportant: !viewData.newActivityImportant})
 						}),
-					{ctor: '[]'});
+					_1: _user$project$JavascriptCall$sendFirebaseAnalytics('change_important_checkbox')
+				};
 			case 'NewActivityUrgent':
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					_elm_lang$core$Native_Utils.update(
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							viewData: _elm_lang$core$Native_Utils.update(
 								viewData,
 								{newActivityUrgent: !viewData.newActivityUrgent})
 						}),
-					{ctor: '[]'});
+					_1: _user$project$JavascriptCall$sendFirebaseAnalytics('change_urgent_checkbox')
+				};
 			case 'ShowHelpMsg':
-				return A2(
-					_elm_lang$core$Platform_Cmd_ops['!'],
-					_elm_lang$core$Native_Utils.update(
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							viewData: _elm_lang$core$Native_Utils.update(
 								viewData,
 								{showHelpMsg: !viewData.showHelpMsg})
 						}),
-					{ctor: '[]'});
+					_1: _user$project$JavascriptCall$sendFirebaseAnalytics(
+						A2(
+							_elm_lang$core$String$append,
+							'show_helpmsg_',
+							_elm_lang$core$Basics$toString(!viewData.showHelpMsg)))
+				};
 			default:
-				var _p3 = A3(_debois$elm_mdl$Material$update, _user$project$Quadrant_Message$Mdl, _p2._0, viewData);
-				var viewData_ = _p3._0;
-				var cmds = _p3._1;
+				var _p4 = A3(_debois$elm_mdl$Material$update, _user$project$Quadrant_Message$Mdl, _p2._0, viewData);
+				var viewData_ = _p4._0;
+				var cmds = _p4._1;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -19595,7 +19613,7 @@ var _user$project$Update$update = F2(
 				_1: _elm_lang$core$Platform_Cmd$batch(
 					{
 						ctor: '::',
-						_0: _user$project$LocalStorage$setToLS(
+						_0: _user$project$JavascriptCall$setToLS(
 							A2(
 								_elm_lang$core$Json_Encode$encode,
 								0,
@@ -19603,7 +19621,11 @@ var _user$project$Update$update = F2(
 						_1: {
 							ctor: '::',
 							_0: A2(_elm_lang$core$Platform_Cmd$map, _user$project$Message$Quadrant, quadCmd),
-							_1: {ctor: '[]'}
+							_1: {
+								ctor: '::',
+								_0: _user$project$JavascriptCall$sendFirebaseAnalytics('localstorage saving'),
+								_1: {ctor: '[]'}
+							}
 						}
 					})
 			};
@@ -21063,8 +21085,38 @@ var _user$project$View$view = function (model) {
 								{ctor: '[]'},
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html$text('window of life'),
-									_1: {ctor: '[]'}
+									_0: A2(
+										_debois$elm_mdl$Material_Options$img,
+										{
+											ctor: '::',
+											_0: _debois$elm_mdl$Material_Grid$hide(_debois$elm_mdl$Material_Grid$Phone),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$src('assets/img/logo.png'),
+											_1: {ctor: '[]'}
+										}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_debois$elm_mdl$Material_Options$span,
+											{
+												ctor: '::',
+												_0: _debois$elm_mdl$Material_Typography$title,
+												_1: {
+													ctor: '::',
+													_0: A2(_debois$elm_mdl$Material_Options$css, 'margin-left', '20px'),
+													_1: {ctor: '[]'}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('window of life'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}),
 							_1: {ctor: '[]'}
 						}),

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "902183238647",
+    "firebase_url": "https://windowoflife-5801a.firebaseio.com",
+    "project_id": "windowoflife-5801a",
+    "storage_bucket": "windowoflife-5801a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902183238647:android:55b8609a7b58b9e0",
+        "android_client_info": {
+          "package_name": "com.beautonomous.first"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902183238647-9u0084kcgnpkidf10155gibnqi4c67tn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCboDufesNlCX0dmuCWtI5AbiCxhqjZdDk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
