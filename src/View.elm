@@ -85,6 +85,12 @@ footerView =
             Footer.right []
                 [ Footer.logo [] [ Footer.html <| text "Love us @ " ]
                 , Footer.html <|
+                    Html.a
+                        [ Attrs.href "https://www.facebook.com/WindowOfLifeApp"
+                        , Attrs.attribute "style" "margin-right:5px;"
+                        ]
+                        [ text "facebook page" ]
+                , Footer.html <|
                     Html.div
                         [ Attrs.class "fb-like"
                         , Attrs.attribute "data-action" "like"
