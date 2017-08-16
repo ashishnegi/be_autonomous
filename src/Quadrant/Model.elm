@@ -329,10 +329,10 @@ quadrantToName : QuadrantType -> String
 quadrantToName quadrant =
     case quadrant of
         UrgentAndImportant ->
-            "Crisis"
+            "Crisis situations"
 
         ImportantNotUrgent ->
-            "Holy Grail"
+            "Productive and Planning"
 
         UrgentNotImportant ->
             "Interruptions"

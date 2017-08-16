@@ -33,6 +33,14 @@
      app.ports.setToLS.subscribe(function(modelStr) {
         window.localStorage.setItem("model", modelStr);
      });
+
+     app.ports.sendFirebaseAnalytics.subscribe(function(component) {
+         if (window.FirebasePlugin) {
+             window.FirebasePlugin.logEvent("select_content", {content_type: "used", item_id: component});
+         } else {
+             console.log("firebase plugin not present");
+         }
+     });
     </script>
   </body>
 </html>

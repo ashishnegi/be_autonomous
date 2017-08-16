@@ -1,8 +1,8 @@
 module Update exposing (..)
 
+import JavascriptCall as JC
 import Json.Encode as JE
 import Json.Encode as JE
-import LocalStorage as LS
 import Material
 import Message as Msg
 import Model exposing (Model)
@@ -20,8 +20,9 @@ update msg model =
             in
                 ( { model | quadrant = quad }
                 , Cmd.batch
-                    [ LS.setToLS (JE.encode 0 (QM.encodeModel quad))
+                    [ JC.setToLS (JE.encode 0 (QM.encodeModel quad))
                     , Cmd.map Msg.Quadrant quadCmd
+                    , JC.sendFirebaseAnalytics "localstorage saving"
                     ]
                 )
 
