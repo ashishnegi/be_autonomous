@@ -2,7 +2,6 @@ module Quadrant.View exposing (view)
 
 import Html exposing (Html, div, text, button, input, fieldset, label, p)
 import Html.Attributes exposing (placeholder, name, style, type_, disabled, checked, value)
-import Html.CssHelpers
 import Html.Events exposing (onClick, onInput)
 import Markdown
 import Material
@@ -33,10 +32,6 @@ import Utils
 white : Options.Property c m
 white =
     Color.text Color.white
-
-
-{ id, class, classList } =
-    Html.CssHelpers.withNamespace "lifeview"
 
 
 view : QuadrantModel -> Html Msg

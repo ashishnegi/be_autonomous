@@ -31,8 +31,8 @@ elm-install -t
 14) Checkbox not good.
 ~ Done 15) Name of quadrant.
 ~ Done 16) Firebase google analytics added.
-**) mobile app : publish : end of month.
-
+~ Done 17) mobile app : publish : end of month.
+~ 18) Google Analytics on website.
 
 # Implementation:
 ~Done: 1) tell elm-mdl ... Not required.
@@ -57,3 +57,12 @@ elm-install -t
 # Debugging
 3) Enabled : Settings -> About Phone -> Build Number -> Tap 10 times -> back. -> Developer Options -> Usb debugging
 4) Console logs and debugging in chrome browser : chrome://inspect/#devices
+
+# Future
+1. Quadrant as Api ..
+2. Manager : Target segment.
+3. Pros/Cons/Risk/Reward.
+
+
+# Aim:
+1. Long term decision making skills.
