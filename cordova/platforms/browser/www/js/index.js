@@ -37,12 +37,21 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-	var node = document.getElementById('main');
-	var oldModel = window.localStorage ? window.localStorage.getItem("model") : null;
-	var app = Elm.Main.embed(node, oldModel ? oldModel : "null");
-	app.ports.setToLS.subscribe(function(modelStr) {
-	  window.localStorage.setItem("model", modelStr);
-  });
+        var node = document.getElementById('main');
+        var oldModel = window.localStorage ? window.localStorage.getItem("model") : null;
+        var app = Elm.Main.embed(node, oldModel ? oldModel : "null");
+        app.ports.setToLS.subscribe(function(modelStr) {
+            window.localStorage.setItem("model", modelStr);
+        });
+
+        app.ports.sendFirebaseAnalytics.subscribe(function(component) {
+            if (window.FirebasePlugin) {
+                window.FirebasePlugin.logEvent("select_content", {content_type: component, item_id: component});
+            } else {
+                console.log("firebase plugin not present, ", component, window.FirebasePlugin);
+            }
+        });
+
 
         // (function(d, s, id) {
         //     var js, fjs = d.getElementsByTagName(s)[0];
@@ -51,7 +60,7 @@ var app = {
         //     js.src = "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.10&appId=1905032179713517";
         //     fjs.parentNode.insertBefore(js, fjs);
         // }(document, 'script', 'facebook-jssdk'));
-	console.log('Received Event: ' + id);
+        console.log('Received Event: ' + id);
     }
 };
 
